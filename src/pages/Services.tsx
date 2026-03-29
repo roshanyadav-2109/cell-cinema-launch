@@ -1,4 +1,3 @@
-import { Play } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
 import AnimatedSection from "@/components/AnimatedSection";
 
@@ -8,7 +7,6 @@ const capabilitiesData = [
     description:
       "Continuous molecular measurement of living cells at sub-cellular resolution, capturing chemical dynamics as they happen rather than reconstructing them after the fact.",
     imagePlaceholder: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=1000&auto=format&fit=crop", 
-    isVideo: true,
     svg: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-28 h-28 md:w-36 md:h-36 text-primary">
         <path d="M6 18h8" />
@@ -25,7 +23,6 @@ const capabilitiesData = [
     description:
       "Our optical platform interrogates native molecular bonds directly, eliminating probe-induced perturbation. The cell you measure is the cell that's actually there.",
     imagePlaceholder: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=1000&auto=format&fit=crop",
-    isVideo: false,
     svg: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-28 h-28 md:w-36 md:h-36 text-primary">
         <path d="m15 2-3.11 3.11a14.9 14.9 0 0 0-4.65 10.33V22h-1v-6.5a13.9 13.9 0 0 1 4.31-9.59L13.75 2.75l1.25-.75Z" />
@@ -41,7 +38,6 @@ const capabilitiesData = [
     description:
       "Population averages hide the biology that matters. We extract high-dimensional chemical signatures from individual cells, resolving the heterogeneity that drives drug resistance.",
     imagePlaceholder: "https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=1000&auto=format&fit=crop",
-    isVideo: true,
     svg: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-28 h-28 md:w-36 md:h-36 text-primary">
         <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" />
@@ -58,8 +54,8 @@ const Services = () => {
   return (
     <PageLayout title="Capabilities" description="Explore the capabilities of the Precigenetics platform.">
       
-      {/* Wrapper to enforce the Inter font and background */}
-      <div className="w-full bg-[#f8fafc] pb-32" style={{ fontFamily: "'Inter', sans-serif" }}>
+      {/* Wrapper to enforce the Inter font and pure white background */}
+      <div className="w-full bg-[#ffffff] pb-32" style={{ fontFamily: "'Inter', sans-serif" }}>
         
         {/* 1. Header Section */}
         <div className="pt-24 md:pt-32 pb-16 md:pb-24 px-6 text-center max-w-[1000px] mx-auto">
@@ -89,7 +85,7 @@ const Services = () => {
                   }`}
                 >
                   
-                  {/* Text Block (No Icon Above It Now) */}
+                  {/* Text Block */}
                   <div className="flex-1 w-full text-center md:text-left">
                     <h2 className="text-[28px] md:text-[36px] font-semibold text-slate-900 mb-5 tracking-tight leading-[1.2]">
                       {capability.title}
@@ -100,11 +96,11 @@ const Services = () => {
                     </p>
                   </div>
 
-                  {/* Media Frame (Slightly rounded, containing SVG & subtle image background) */}
+                  {/* Media Frame (Slightly rounded, no shadow, containing SVG & subtle image background) */}
                   <div className="flex-1 w-full">
-                    <div className="relative w-full aspect-[4/3] md:aspect-[5/4] rounded-xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-slate-200 bg-white group cursor-pointer flex items-center justify-center">
+                    <div className="relative w-full aspect-[4/3] md:aspect-[5/4] rounded-xl overflow-hidden border border-[#eeeeee] bg-[#ffffff] group flex items-center justify-center">
                       
-                      {/* Subtle Image Background (Creates a faint scientific texture) */}
+                      {/* Subtle Image Background (Creates a faint scientific texture inside the flat frame) */}
                       <img 
                         src={capability.imagePlaceholder} 
                         alt={capability.title}
@@ -115,15 +111,6 @@ const Services = () => {
                       <div className="relative z-10 transform transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-2">
                         {capability.svg}
                       </div>
-
-                      {/* Video Play Button Overlay (renders cleanly in the bottom right corner if isVideo is true) */}
-                      {capability.isVideo && (
-                        <div className="absolute bottom-6 right-6 z-20">
-                          <div className="w-12 h-12 bg-primary/10 hover:bg-primary transition-colors duration-300 rounded-full flex items-center justify-center border border-primary/20 group-hover:border-primary">
-                            <Play className="w-5 h-5 ml-1 text-primary group-hover:text-white transition-colors duration-300" />
-                          </div>
-                        </div>
-                      )}
 
                     </div>
                   </div>
