@@ -1,101 +1,175 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Dna, ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
 import AnimatedSection from "@/components/AnimatedSection";
 
-const categories = ["All", "Company News", "Research", "Industry"];
+const categories = ["All", "Company News", "Research", "Industry", "Platform"];
 
+// Expanded to fit the new list format
 const posts = [
   {
-    date: "March 15, 2026",
+    date: "03.15.2026",
     category: "Company News",
     title: "Precigenetics Launches Cell Cinema Platform at MBC BioLabs",
-    excerpt: "Our real-time chemical imaging platform is now operational at MBC BioLabs in San Carlos, marking a new era in live-cell drug discovery.",
+    tags: ["Company News", "Platform"],
   },
   {
-    date: "February 28, 2026",
+    date: "02.28.2026",
     category: "Research",
     title: "Why Real-Time Matters: Moving Beyond Endpoint Assays",
-    excerpt: "Endpoint assays have been the gold standard — but they only tell you what happened, not how. Here's why real-time observation changes everything.",
+    tags: ["Research", "Scientific"],
   },
   {
-    date: "January 20, 2026",
+    date: "01.20.2026",
     category: "Industry",
     title: "FDA's Shift Away from Animal Testing: What It Means for Drug Discovery",
-    excerpt: "With FDA no longer mandating animal studies, next-generation human-cell disease models are poised to transform preclinical research.",
+    tags: ["Industry", "Regulatory"],
   },
 ];
 
 const Blog = () => {
   const [filter, setFilter] = useState("All");
-  const filtered = filter === "All" ? posts : posts.filter((p) => p.category === filter);
+  const [search, setSearch] = useState("");
+  const [isYearDropdownOpen, setIsYearDropdownOpen] = useState(false);
+
+  // Filter logic combining Search + Category
+  const filtered = posts.filter((p) => {
+    const matchesCat = filter === "All" || p.tags.includes(filter) || p.category === filter;
+    const matchesSearch = p.title.toLowerCase().includes(search.toLowerCase());
+    return matchesCat && matchesSearch;
+  });
 
   return (
-    <PageLayout title="News & Insights" description="The latest from Precigenetics — research updates, industry perspectives, and company news.">
-      {/* Hero */}
-      <section className="pt-32 pb-20 md:pt-40 md:pb-24 bg-accent">
-        <div className="max-w-[1280px] mx-auto px-6 text-center">
-          <h1 className="font-heading font-bold text-4xl md:text-[56px] leading-[1.1] tracking-tight mb-5">News & Insights</h1>
-          <p className="text-slate-body text-lg max-w-2xl mx-auto leading-relaxed">
-            The latest from Precigenetics — research updates, industry perspectives, and company news.
-          </p>
-        </div>
-      </section>
+    <PageLayout title="Newsroom" description="The latest from Precigenetics — research updates, industry perspectives, and company news.">
+      {/* Top Graphic Mockup - adapted to use theme colors via Tailwind */}
+      <div className="absolute top-0 right-0 w-[350px] h-[350px] bg-[radial-gradient(circle_at_top_right,theme(colors.primary.DEFAULT/0.1)_0%,transparent_70%)] rounded-bl-full -z-10 pointer-events-none"></div>
 
-      {/* Filters + Grid */}
-      <section className="py-20 md:py-24">
-        <div className="max-w-[1280px] mx-auto px-6">
-          {/* Filter bar */}
-          <div className="flex flex-wrap gap-2 mb-10">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setFilter(cat)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  filter === cat
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-accent text-accent-foreground hover:bg-primary/10"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10 pb-24 pt-32">
+        {/* Header */}
+        <header>
+          <h1 className="text-[40px] md:text-[56px] font-bold mt-10 md:mt-[60px] mb-[40px] md:mb-[50px] max-w-[800px] leading-[1.1] text-foreground">
+            Welcome to the Precigenetics Newsroom
+          </h1>
+        </header>
+
+        {/* Secondary Nav Tabs */}
+        <div className="flex gap-8 py-5 border-b-2 border-slate-200 mb-10 overflow-x-auto whitespace-nowrap">
+          <button className="text-primary font-bold text-lg pb-4 border-b-4 border-primary -mb-[22px]">News & Insights</button>
+          <button className="text-foreground font-medium text-lg pb-4 transition-colors hover:text-primary">Press Releases</button>
+          <button className="text-foreground font-medium text-lg pb-4 transition-colors hover:text-primary">Publications</button>
+        </div>
+
+        {/* Section Intro */}
+        <div className="text-slate-500 text-sm mb-2.5 font-medium">News & Insights</div>
+        <div className="text-2xl font-medium mb-12 text-foreground">All Precigenetics updates, research, and company news</div>
+
+        {/* Action Bar: Search & Filters */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-8 md:gap-10">
+          
+          {/* Custom Search Field */}
+          <div className="flex-1 flex items-center border-b border-slate-300 pb-2.5 w-full transition-colors focus-within:border-primary">
+            <input
+              type="text"
+              placeholder="Search for News & Insights"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="border-none outline-none text-[20px] md:text-[22px] w-full text-foreground placeholder:text-slate-400 bg-transparent"
+            />
+            <button className="w-9 h-9 border border-slate-400 rounded-full flex items-center justify-center text-slate-500 hover:text-primary hover:border-primary transition-colors flex-shrink-0">
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
 
-          {filtered.length > 0 ? (
-            <div className="grid md:grid-cols-3 gap-6">
-              {filtered.map((post, i) => (
-                <AnimatedSection key={post.title} delay={i * 0.1}>
-                  <div className="bg-card rounded-lg overflow-hidden shadow-sm border border-border hover:-translate-y-1 hover:shadow-md transition-all duration-200 h-full flex flex-col">
-                    <div className="aspect-[16/9] bg-gradient-to-br from-primary/15 to-secondary/15 flex items-center justify-center">
-                      <Dna className="w-12 h-12 text-primary/20" />
-                    </div>
-                    <div className="p-6 flex flex-col flex-1">
-                      <div className="flex items-center gap-2 mb-3">
-                        <span className="text-xs text-slate-muted font-medium">{post.date}</span>
-                        <span className="bg-accent text-accent-foreground text-xs font-medium px-2.5 py-0.5 rounded-full">{post.category}</span>
+          {/* Filter Controls */}
+          <div className="flex items-center gap-4 w-full md:w-auto">
+            <span className="text-primary font-semibold text-sm hidden md:block">Filter Options</span>
+            
+            {/* Archive Dropdown */}
+            <div className="relative">
+              <button 
+                onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
+                className="px-5 py-2.5 border border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-semibold text-base flex items-center gap-3 min-w-[160px] justify-between"
+              >
+                Archive Date <ChevronDown className="w-5 h-5" />
+              </button>
+              
+              {isYearDropdownOpen && (
+                <div className="absolute top-full right-0 md:left-0 mt-2 bg-card border border-border rounded-2xl shadow-lg min-w-[200px] p-5 z-20">
+                  <span className="text-slate-500 text-sm block mb-4 font-medium">Year</span>
+                  {["2026", "2025", "2024", "2023"].map((year) => (
+                    <label key={year} className="flex items-center mb-3 cursor-pointer text-lg text-foreground hover:text-primary transition-colors">
+                      <input type="checkbox" className="hidden peer" />
+                      {/* Custom Checkbox mimicking the design */}
+                      <div className="w-[22px] h-[22px] border border-slate-400 rounded-md mr-4 relative peer-checked:bg-primary peer-checked:border-primary flex items-center justify-center transition-colors">
+                        <div className="hidden peer-checked:block w-1.5 h-2.5 border-b-2 border-r-2 border-primary-foreground transform rotate-45 -mt-0.5"></div>
                       </div>
-                      <h3 className="font-heading font-semibold text-base mb-2 leading-snug">{post.title}</h3>
-                      <p className="text-slate-body text-sm leading-relaxed mb-4 flex-1">{post.excerpt}</p>
-                      <span className="text-primary text-sm font-medium inline-flex items-center gap-1">
-                        Read More <ArrowRight className="w-4 h-4" />
-                      </span>
+                      {year}
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* View Select */}
+            <select className="px-5 py-2.5 border border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-semibold text-base appearance-none pr-10 cursor-pointer bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%24%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:calc(100%-12px)_center] bg-[length:16px]">
+              <option>View 10</option>
+              <option>View 25</option>
+              <option>View All</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Categories Grid */}
+        <div className="font-bold text-lg mb-5 text-foreground">Categories</div>
+        <div className="flex flex-wrap gap-3 mb-14">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setFilter(cat)}
+              className={`px-5 py-2.5 border rounded-lg text-sm font-semibold transition-colors ${
+                filter === cat
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-primary/5 text-primary border-primary hover:bg-primary/10"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <hr className="border-t border-slate-200 mb-12" />
+
+        {/* News Items List */}
+        <div className="flex flex-col">
+          {filtered.length > 0 ? (
+            filtered.map((post, i) => (
+              <AnimatedSection key={post.title} delay={i * 0.1}>
+                <article className="flex flex-col md:flex-row gap-2 md:gap-[60px] mb-10 group">
+                  <div className="text-slate-500 text-base md:min-w-[100px] md:pt-1 font-medium">
+                    {post.date}
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-xl md:text-[24px] text-primary font-medium mb-3.5 leading-[1.3] group-hover:underline cursor-pointer decoration-2 underline-offset-4">
+                      {post.title}
+                    </h2>
+                    <div className="flex flex-wrap gap-2.5 mt-1">
+                      {post.tags.map((tag) => (
+                        <span key={tag} className="border border-primary bg-primary/5 text-primary px-[14px] py-[5px] rounded-md text-xs font-semibold tracking-wide">
+                          {tag}
+                        </span>
+                      ))}
                     </div>
                   </div>
-                </AnimatedSection>
-              ))}
-            </div>
+                </article>
+              </AnimatedSection>
+            ))
           ) : (
-            <div className="text-center py-20">
-              <p className="text-slate-muted mb-4">No articles found matching your search criteria.</p>
-              <button onClick={() => setFilter("All")} className="text-primary font-medium hover:underline">
-                Clear Search
-              </button>
+            <div className="text-center py-10 text-slate-500 font-medium text-lg">
+              No articles found matching your search criteria.
             </div>
           )}
         </div>
-      </section>
+      </div>
     </PageLayout>
   );
 };
