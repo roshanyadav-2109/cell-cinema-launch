@@ -37,14 +37,14 @@ const Platform = () => {
           </h1>
           
           {/* Subline with Logo */}
-          <div className="flex items-center justify-center gap-3 text-slate-500 font-medium text-sm md:text-lg tracking-wide">
+          <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3 text-slate-500 font-medium text-sm md:text-lg tracking-wide">
             <span>* Incubated at</span>
             <img 
               src="https://mbcbiolabs.com/wp-content/uploads/2023/03/MBC-BioLabs-logo.svg" 
               alt="MBC BioLabs" 
-              className="h-6 md:h-8" 
-            <span>* Sans Carlos</span>
+              className="h-5 md:h-8" 
             />
+            <span>San Carlos</span>
           </div>
         </div>
 
