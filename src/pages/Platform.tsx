@@ -67,17 +67,24 @@ const Platform = () => {
             willChange: 'width, height, margin, border-radius'
           }}
         >
-          {/* YouTube Embed: Muted, Autoplay, No Related Videos (rel=0), Modest Branding, and Looped */}
+          {/* YouTube Embed: Muted, Autoplay, No Controls, and pointer-events-none to disable hover overlays */}
           <iframe
-            className="absolute inset-0 w-full h-full pointer-events-auto"
-            src="https://www.youtube.com/embed/b0aYlwBE7nk?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=b0aYlwBE7nk&controls=1"
+            className="absolute inset-0 w-full h-full pointer-events-none select-none"
+            src="https://www.youtube.com/embed/b0aYlwBE7nk?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=b0aYlwBE7nk&controls=0&disablekb=1"
             title="Cell Cinema Platform Video"
             frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
+            allow="autoplay; encrypted-media; gyroscope; picture-in-picture"
+            tabIndex={-1}
             style={{ border: 'none' }}
           ></iframe>
+          
+          {/* Internal overlay and text mimicking the uploaded design */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
+          <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 pointer-events-none">
+            <h2 className="text-white text-2xl md:text-4xl font-medium tracking-tight drop-shadow-md">
+              Mapping the real-time dynamics of living cells.
+            </h2>
+          </div>
         </div>
 
         {/* Text & Narrative Container */}
