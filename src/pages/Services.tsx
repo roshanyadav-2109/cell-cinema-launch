@@ -1,4 +1,4 @@
-import { Microscope, Dna, ScanSearch, Play } from "lucide-react";
+import { Play } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
 import AnimatedSection from "@/components/AnimatedSection";
 
@@ -7,25 +7,50 @@ const capabilitiesData = [
     title: "Real-Time Chemical Imaging",
     description:
       "Continuous molecular measurement of living cells at sub-cellular resolution, capturing chemical dynamics as they happen rather than reconstructing them after the fact.",
-    icon: Microscope,
     imagePlaceholder: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=1000&auto=format&fit=crop", 
     isVideo: true,
+    svg: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-28 h-28 md:w-36 md:h-36 text-primary">
+        <path d="M6 18h8" />
+        <path d="M3 22h18" />
+        <path d="M14 22a7 7 0 1 0 0-14h-1" />
+        <path d="M9 14h2" />
+        <path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z" />
+        <path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3" />
+      </svg>
+    ),
   },
   {
     title: "Label-Free & Non-Destructive",
     description:
       "Our optical platform interrogates native molecular bonds directly, eliminating probe-induced perturbation. The cell you measure is the cell that's actually there.",
-    icon: Dna,
     imagePlaceholder: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=1000&auto=format&fit=crop",
     isVideo: false,
+    svg: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-28 h-28 md:w-36 md:h-36 text-primary">
+        <path d="m15 2-3.11 3.11a14.9 14.9 0 0 0-4.65 10.33V22h-1v-6.5a13.9 13.9 0 0 1 4.31-9.59L13.75 2.75l1.25-.75Z" />
+        <path d="m9 22 3.11-3.11a14.9 14.9 0 0 0 4.65-10.33V2h1v6.5a13.9 13.9 0 0 1-4.31 9.59L10.25 21.25l-1.25.75Z" />
+        <path d="m6 18 12-12" />
+        <path d="m10.5 21.5 3-3" />
+        <path d="m13.5 2.5-3 3" />
+      </svg>
+    ),
   },
   {
     title: "Single-Cell Resolution",
     description:
       "Population averages hide the biology that matters. We extract high-dimensional chemical signatures from individual cells, resolving the heterogeneity that drives drug resistance.",
-    icon: ScanSearch,
     imagePlaceholder: "https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=1000&auto=format&fit=crop",
     isVideo: true,
+    svg: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-28 h-28 md:w-36 md:h-36 text-primary">
+        <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" />
+        <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z" />
+        <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4" />
+        <path d="M17.599 6.5A3 3 0 0 0 14 6" />
+        <path d="M6.401 6.5A3 3 0 0 1 10 6" />
+      </svg>
+    ),
   },
 ];
 
@@ -54,7 +79,6 @@ const Services = () => {
         <div className="max-w-[1280px] mx-auto px-6 md:px-12 flex flex-col gap-20 md:gap-32">
           {capabilitiesData.map((capability, index) => {
             const isEven = index % 2 === 0;
-            const Icon = capability.icon;
 
             return (
               <AnimatedSection key={index} delay={0.1}>
@@ -65,12 +89,8 @@ const Services = () => {
                   }`}
                 >
                   
-                  {/* Text Block */}
+                  {/* Text Block (No Icon Above It Now) */}
                   <div className="flex-1 w-full text-center md:text-left">
-                    <div className={`w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 md:mb-8 mx-auto md:mx-0`}>
-                      <Icon className="w-7 h-7 text-primary" strokeWidth={2} />
-                    </div>
-                    
                     <h2 className="text-[28px] md:text-[36px] font-semibold text-slate-900 mb-5 tracking-tight leading-[1.2]">
                       {capability.title}
                     </h2>
@@ -80,25 +100,27 @@ const Services = () => {
                     </p>
                   </div>
 
-                  {/* Media Frame (Video/Image) */}
+                  {/* Media Frame (Slightly rounded, containing SVG & subtle image background) */}
                   <div className="flex-1 w-full">
-                    <div className="relative w-full aspect-[4/3] rounded-[24px] overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.06)] border border-slate-200 bg-slate-900 group cursor-pointer">
+                    <div className="relative w-full aspect-[4/3] md:aspect-[5/4] rounded-xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-slate-200 bg-white group cursor-pointer flex items-center justify-center">
                       
-                      {/* Placeholder Image */}
+                      {/* Subtle Image Background (Creates a faint scientific texture) */}
                       <img 
                         src={capability.imagePlaceholder} 
                         alt={capability.title}
-                        className="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-overlay transition-transform duration-700 group-hover:scale-105"
+                        className="absolute inset-0 w-full h-full object-cover opacity-[0.04] mix-blend-multiply transition-transform duration-700 group-hover:scale-105"
                       />
                       
-                      {/* Subtle Vignette for depth */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                      {/* Center Custom SVG */}
+                      <div className="relative z-10 transform transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-2">
+                        {capability.svg}
+                      </div>
 
-                      {/* Video Play Button Overlay (renders conditionally) */}
+                      {/* Video Play Button Overlay (renders cleanly in the bottom right corner if isVideo is true) */}
                       {capability.isVideo && (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-16 h-16 md:w-20 md:h-20 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 group-hover:bg-white/30 group-hover:scale-110">
-                            <Play className="w-7 h-7 md:w-8 md:h-8 text-white fill-white ml-1.5 transition-transform duration-300" />
+                        <div className="absolute bottom-6 right-6 z-20">
+                          <div className="w-12 h-12 bg-primary/10 hover:bg-primary transition-colors duration-300 rounded-full flex items-center justify-center border border-primary/20 group-hover:border-primary">
+                            <Play className="w-5 h-5 ml-1 text-primary group-hover:text-white transition-colors duration-300" />
                           </div>
                         </div>
                       )}
