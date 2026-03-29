@@ -45,7 +45,7 @@ const Blog = () => {
       <div className="relative w-full overflow-clip" style={{ fontFamily: "'Inter', sans-serif" }}>
         
         {/* Animated Top Right Graphic: Restrict height to first line and remove corner radius */}
-        <div className="absolute top-0 right-0 w-full max-w-[550px] h-[200px] md:h-[250px] overflow-hidden -z-10 pointer-events-none">
+        <div className="absolute top-0 right-0 w-full max-w-[550px] h-[180px] md:h-[220px] overflow-hidden -z-10 pointer-events-none">
           {/* Deep Purple/Violet radial glow */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(75,0,130,0.35)_0%,transparent_70%)]"></div>
           
@@ -143,27 +143,27 @@ const Blog = () => {
         </div>
 
         {/* Main Content Container */}
-        <div className="max-w-[1280px] mx-auto px-6 md:px-12 pb-20 pt-16 relative">
+        <div className="max-w-[1280px] mx-auto px-5 md:px-12 pb-20 pt-12 md:pt-16 relative">
           
           {/* Header */}
           <header>
-            <h1 className="text-[32px] md:text-[46px] font-extrabold mt-2 md:mt-4 mb-[24px] md:mb-[32px] max-w-[800px] leading-[1.1] text-foreground tracking-tight">
+            <h1 className="text-[36px] md:text-[46px] font-extrabold mt-2 md:mt-4 mb-[24px] md:mb-[32px] max-w-[800px] leading-[1.1] text-foreground tracking-tight">
               Welcome to the Precigenetics Newsroom
             </h1>
           </header>
 
-          {/* Secondary Nav Tabs - Reduced bottom margin here to close the gap */}
-          <div className="flex gap-8 py-4 border-b border-slate-200 mb-4 overflow-x-auto whitespace-nowrap hide-scrollbar">
+          {/* Secondary Nav Tabs */}
+          <div className="flex gap-6 md:gap-8 py-4 border-b border-slate-200 mb-6 md:mb-8 overflow-x-auto whitespace-nowrap hide-scrollbar">
             <button className="text-primary font-medium text-base pb-3 border-b-[3px] border-primary -mb-[18px]">News & Insights</button>
             <button className="text-foreground font-medium text-base pb-3 transition-colors hover:text-primary">Press Releases</button>
             <button className="text-foreground font-medium text-base pb-3 transition-colors hover:text-primary">Publications</button>
           </div>
 
           {/* Section Intro */}
-          <div className="text-xl font-bold mb-8 text-foreground tracking-tight">All Precigenetics updates, research, and company news</div>
+          <div className="text-[22px] font-bold mb-8 text-foreground tracking-tight leading-snug">All Precigenetics updates, research, and company news</div>
 
           {/* Action Bar: Search & Filters */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6 md:gap-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-5 md:gap-8">
             
             {/* Custom Search Field (Non-bold) */}
             <div className="flex-1 flex items-center border-b-[2px] border-slate-300 pb-2 w-full transition-colors focus-within:border-primary">
@@ -179,21 +179,21 @@ const Blog = () => {
               </button>
             </div>
 
-            {/* Filter Controls (Non-bold) */}
-            <div className="flex items-center gap-3 w-full md:w-auto relative z-20">
+            {/* Filter Controls (Non-bold, optimized for mobile row layout) */}
+            <div className="flex flex-row items-center gap-3 w-full md:w-auto relative z-20">
               <span className="text-primary font-medium text-sm hidden md:block whitespace-nowrap">Filter Options</span>
               
               {/* Archive Dropdown */}
-              <div className="relative">
+              <div className="relative flex-1 md:flex-none">
                 <button 
                   onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
-                  className="px-4 py-2 border-[2px] border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-medium text-sm flex items-center gap-2 min-w-[130px] justify-between"
+                  className="px-4 py-2 w-full md:w-auto border-[2px] border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-medium text-sm flex items-center gap-2 justify-between"
                 >
                   Archive Date <ChevronDown className="w-4 h-4 stroke-[2]" />
                 </button>
                 
                 {isYearDropdownOpen && (
-                  <div className="absolute top-full right-0 md:left-0 mt-2 bg-card border-[2px] border-border rounded-xl shadow-lg min-w-[180px] p-4">
+                  <div className="absolute top-full left-0 mt-2 bg-card border-[2px] border-border rounded-xl shadow-lg min-w-[180px] p-4">
                     <span className="text-slate-500 text-xs block mb-3 font-medium uppercase tracking-wider">Year</span>
                     {["2026", "2025", "2024", "2023"].map((year) => (
                       <label key={year} className="flex items-center mb-2.5 cursor-pointer text-base text-foreground hover:text-primary transition-colors font-medium">
@@ -209,7 +209,7 @@ const Blog = () => {
               </div>
 
               {/* View Select */}
-              <select className="px-4 py-2 border-[2px] border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-medium text-sm appearance-none pr-8 cursor-pointer bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%24%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:calc(100%-10px)_center] bg-[length:14px]">
+              <select className="px-4 py-2 flex-1 md:flex-none border-[2px] border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-medium text-sm appearance-none pr-8 cursor-pointer bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%24%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:calc(100%-10px)_center] bg-[length:14px]">
                 <option>View 10</option>
                 <option>View 25</option>
                 <option>View All</option>
@@ -243,17 +243,16 @@ const Blog = () => {
               filtered.map((post, i) => (
                 <AnimatedSection key={post.title} delay={i * 0.1}>
                   <article className="flex flex-col md:flex-row gap-2 md:gap-[40px] mb-8 group">
-                    <div className="text-slate-500 text-sm md:min-w-[90px] md:pt-1 font-semibold tracking-tight">
+                    <div className="text-slate-500 text-[15px] md:min-w-[90px] md:pt-1 font-semibold tracking-tight">
                       {post.date}
                     </div>
                     <div className="flex-1">
-                      {/* Changed from font-extrabold to font-semibold for the news title */}
-                      <h2 className="text-lg md:text-[22px] text-primary font-semibold mb-2.5 leading-[1.3] group-hover:underline cursor-pointer decoration-2 underline-offset-4 tracking-tight">
+                      <h2 className="text-[20px] md:text-[22px] text-primary font-semibold mb-3 leading-[1.3] group-hover:underline cursor-pointer decoration-2 underline-offset-4 tracking-tight">
                         {post.title}
                       </h2>
                       <div className="flex flex-wrap gap-2 mt-1">
                         {post.tags.map((tag) => (
-                          <span key={tag} className="border-[2px] border-primary bg-primary/5 text-primary px-3 py-1 rounded-md text-[11px] font-medium tracking-wide uppercase">
+                          <span key={tag} className="border-[2px] border-primary bg-primary/5 text-slate-900 dark:text-slate-100 px-3 py-1 rounded-md text-[11px] font-medium tracking-wide uppercase">
                             {tag}
                           </span>
                         ))}
