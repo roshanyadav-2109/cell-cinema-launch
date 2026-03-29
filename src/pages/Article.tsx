@@ -1,7 +1,59 @@
-import { Download, Link as LinkIcon, Printer } from "lucide-react";
+import { Download, Link as LinkIcon, ExternalLink, Copy } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
+import { useToast } from "@/hooks/use-toast";
 
 const Article = () => {
+  const { toast } = useToast();
+
+  // Article Content Data
+  const articleTitle = "Precigenetics Invites Public to View and Listen to Webcast of May 5 Conference Call with Analysts";
+  const articleDate = "Tuesday, March 24, 2026 - 10:00am";
+  const articleBody = `NEW YORK—(BUSINESS WIRE)— Precigenetics Inc. invites investors and the general public to view and listen to a webcast of a conference call with investment analysts at 10:00 a.m. EDT on Tuesday, May 5, 2026.
+
+The purpose of the call is to provide an update on Precigenetics's results, as reflected in the company’s First Quarter 2026 Performance Report, to be issued that morning. Investors can access materials via the official investor relations portal.
+
+"We are moving drug discovery beyond endpoint assays with our new real-time chemical imaging platform," said the leadership team. "This webcast will outline how preserving the temporal dimension of biology allows us to detect subtle but meaningful changes that are otherwise overlooked in traditional models."
+
+To view and listen to the webcast and view the Performance Report, visit our web site at www.precigenetics.com/investors. Information on accessing and registering for the webcast will be available on the site starting today.
+
+About Precigenetics
+At Precigenetics, we apply science and our global resources to bring therapies to people that extend and significantly improve their lives. We strive to set the standard for quality, safety and value in the discovery, development and manufacture of health care products, including innovative medicines and vaccines.`;
+
+  // Handlers for the Action Tray
+  const handleDownloadPDF = () => {
+    // Triggers the native browser print dialog, which allows the user to "Save as PDF"
+    window.print();
+  };
+
+  const handleCopyLink = () => {
+    let urlToCopy = window.location.href;
+    
+    // Safety check: if the URL happens to be a YT embed, convert it to a standard watch link
+    if (urlToCopy.includes('youtube.com/embed/')) {
+      const videoId = urlToCopy.split('embed/')[1].split('?')[0];
+      urlToCopy = `https://www.youtube.com/watch?v=${videoId}`;
+    }
+
+    navigator.clipboard.writeText(urlToCopy);
+    toast({
+      title: "Link copied!",
+      description: "The URL has been copied to your clipboard.",
+    });
+  };
+
+  const handleOpenNewTab = () => {
+    window.open(window.location.href, '_blank');
+  };
+
+  const handleCopyContent = () => {
+    const fullText = `${articleTitle}\n${articleDate}\n\n${articleBody}`;
+    navigator.clipboard.writeText(fullText);
+    toast({
+      title: "Content copied!",
+      description: "The article title and body have been copied to your clipboard.",
+    });
+  };
+
   return (
     <PageLayout title="News Article" description="Precigenetics Press Release and Announcements">
       
@@ -10,7 +62,7 @@ const Article = () => {
         
         {/* 1. Hero Banner (Abstract Wave/Gradient) */}
         <div 
-          className="w-full h-[260px] bg-cover bg-center relative"
+          className="w-full h-[260px] bg-cover bg-center relative print:hidden"
           style={{ 
             backgroundImage: "url('https://images.unsplash.com/photo-1530026405186-ed1f139313f8?q=80&w=2000&auto=format&fit=crop')",
           }}
@@ -27,7 +79,7 @@ const Article = () => {
           <div className="w-full max-w-[900px] mb-12">
             
             {/* Tags */}
-            <div className="flex flex-wrap gap-3 mb-6">
+            <div className="flex flex-wrap gap-3 mb-6 print:hidden">
               <span className="text-primary border border-primary px-4 py-1.5 rounded-full text-[13px] font-medium cursor-pointer hover:bg-primary/5 transition-colors">
                 Company News
               </span>
@@ -38,12 +90,12 @@ const Article = () => {
 
             {/* Headline */}
             <h1 className="text-[36px] md:text-[46px] font-semibold leading-[1.1] text-[#000000] mb-6 tracking-tight">
-              Precigenetics Invites Public to View and Listen to Webcast of May 5 Conference Call with Analysts
+              {articleTitle}
             </h1>
 
             {/* Date */}
             <div className="text-[#666666] text-[16px]">
-              Tuesday, March 24, 2026 - 10:00am
+              {articleDate}
             </div>
           </div>
 
@@ -54,15 +106,18 @@ const Article = () => {
             <main className="lg:col-span-3">
               
               {/* Action Tray (Strictly Black Icons) */}
-              <div className="flex gap-6 mb-10 border-b border-slate-100 pb-6">
-                <button className="text-[#000000] hover:text-primary transition-colors" title="Download PDF">
+              <div className="flex gap-6 mb-10 border-b border-slate-100 pb-6 print:hidden">
+                <button onClick={handleDownloadPDF} className="text-[#000000] hover:text-primary transition-colors" title="Download PDF">
                   <Download className="w-6 h-6 stroke-[2]" />
                 </button>
-                <button className="text-[#000000] hover:text-primary transition-colors" title="Copy Link">
+                <button onClick={handleCopyLink} className="text-[#000000] hover:text-primary transition-colors" title="Copy Link">
                   <LinkIcon className="w-6 h-6 stroke-[2]" />
                 </button>
-                <button className="text-[#000000] hover:text-primary transition-colors" title="Print">
-                  <Printer className="w-6 h-6 stroke-[2]" />
+                <button onClick={handleOpenNewTab} className="text-[#000000] hover:text-primary transition-colors" title="Open in New Tab">
+                  <ExternalLink className="w-6 h-6 stroke-[2]" />
+                </button>
+                <button onClick={handleCopyContent} className="text-[#000000] hover:text-primary transition-colors" title="Copy Article Content">
+                  <Copy className="w-6 h-6 stroke-[2]" />
                 </button>
               </div>
 
@@ -92,14 +147,14 @@ const Article = () => {
             </main>
 
             {/* Right Column: Sidebar Vertical (1/4 Width) */}
-            <aside className="lg:col-span-1 flex flex-col gap-6">
+            <aside className="lg:col-span-1 flex flex-col gap-6 print:hidden">
               
               {/* News Alert Card - Padded Image Inside Frame, Reduced Radius, Smaller Content Padding */}
               <div className="bg-white border border-[#eeeeee] rounded-[6px] shadow-[0_2px_10px_rgba(0,0,0,0.02)] p-4">
                 <img 
                   src="/image_f11abe.png" // Use the uploaded image
                   alt="Living cells imaging and Pfizer News" 
-                  className="w-full h-[150px] object-cover rounded-[4px] mb-5" // Reduced height, very small internal radius
+                  className="w-full h-[150px] object-cover rounded-[4px] mb-5" 
                 />
                 <div>
                   <h2 className="text-primary text-[19px] font-semibold mb-2 leading-[1.3]">
