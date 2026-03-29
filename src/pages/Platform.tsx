@@ -36,7 +36,6 @@ const Platform = () => {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    // Trigger once on mount to set initial state correctly if already scrolled
     handleScroll();
     
     return () => window.removeEventListener("scroll", handleScroll);
@@ -57,33 +56,28 @@ const Platform = () => {
         
         {/* 1. Video Hero Frame (Animates on Scroll) */}
         <div 
-          className="relative mx-auto overflow-hidden bg-[#f0f0f0] flex items-center justify-center shadow-sm"
+          className="relative mx-auto overflow-hidden bg-[#000000] flex items-center justify-center shadow-sm"
           style={{
             width: `${frameWidth}%`,
             height: `${frameHeight}vh`,
             marginTop: `${frameMarginTop}px`,
             marginBottom: `${frameMarginBottom}px`,
             borderRadius: `${frameRadius}px`,
-            transition: 'width 0.1s, height 0.1s, margin-top 0.1s, border-radius 0.1s', // Smooths out the React state updates slightly
+            transition: 'width 0.1s, height 0.1s, margin-top 0.1s, border-radius 0.1s',
             willChange: 'width, height, margin, border-radius'
           }}
         >
-          {/* Replace this src with your actual uploaded image path in your public folder */}
-          <img 
-            src="/image_efae20.png" 
-            alt="Living cells imaging" 
-            className="absolute inset-0 w-full h-full object-cover opacity-90 mix-blend-multiply"
-            // Fallback background color if image is missing
-            style={{ backgroundColor: '#e5e7eb' }} 
-          />
-          
-          {/* Internal overlay and text mimicking the uploaded design */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-          <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12">
-            <h2 className="text-white text-2xl md:text-4xl font-medium tracking-tight">
-              Mapping the real-time dynamics of living cells.
-            </h2>
-          </div>
+          {/* YouTube Embed: Muted, Autoplay, No Related Videos (rel=0), Modest Branding, and Looped */}
+          <iframe
+            className="absolute inset-0 w-full h-full pointer-events-auto"
+            src="https://www.youtube.com/embed/b0aYlwBE7nk?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=b0aYlwBE7nk&controls=1"
+            title="Cell Cinema Platform Video"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+            style={{ border: 'none' }}
+          ></iframe>
         </div>
 
         {/* Text & Narrative Container */}
@@ -139,22 +133,14 @@ const Platform = () => {
               {scrollCards.map((card, index) => (
                 <div 
                   key={index} 
-                  // Size logic: ~28vw ensures ~3.5 cards fit on a wide screen, satisfying the "half-cut" requirement
-                  className="w-[80vw] md:w-[35vw] lg:w-[28vw] h-[600px] flex-shrink-0 bg-[#f8f8f8] border border-[#eeeeee] rounded-[20px] p-8 md:p-10 flex flex-col justify-between hover:border-primary/30 transition-colors"
+                  className="w-[80vw] md:w-[35vw] lg:w-[28vw] h-[600px] flex-shrink-0 bg-[#f8f8f8] border border-[#eeeeee] rounded-[20px] p-8 md:p-10 flex flex-col justify-start hover:border-primary/30 transition-colors"
                 >
-                  <div>
-                    <h3 className="text-2xl font-semibold text-[#000000] mb-6 tracking-tight">
-                      {card.title}
-                    </h3>
-                    <p className="text-[#1a1a1a] text-[16px] leading-[1.6]">
-                      {card.desc}
-                    </p>
-                  </div>
-                  
-                  {/* Small decorative interaction prompt at the bottom of the card */}
-                  <div className="text-primary font-medium text-sm flex items-center opacity-80 cursor-pointer hover:opacity-100 transition-opacity">
-                    Learn more <span className="ml-2">→</span>
-                  </div>
+                  <h3 className="text-2xl font-semibold text-[#000000] mb-6 tracking-tight">
+                    {card.title}
+                  </h3>
+                  <p className="text-[#1a1a1a] text-[16px] leading-[1.6]">
+                    {card.desc}
+                  </p>
                 </div>
               ))}
             </div>
