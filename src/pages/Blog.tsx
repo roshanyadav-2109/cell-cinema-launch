@@ -152,14 +152,14 @@ const Blog = () => {
             </h1>
           </header>
 
-          {/* Secondary Nav Tabs */}
-          <div className="flex gap-8 py-4 border-b border-slate-200 mb-8 overflow-x-auto whitespace-nowrap hide-scrollbar">
+          {/* Secondary Nav Tabs - Reduced bottom margin here to close the gap */}
+          <div className="flex gap-8 py-4 border-b border-slate-200 mb-4 overflow-x-auto whitespace-nowrap hide-scrollbar">
             <button className="text-primary font-medium text-base pb-3 border-b-[3px] border-primary -mb-[18px]">News & Insights</button>
             <button className="text-foreground font-medium text-base pb-3 transition-colors hover:text-primary">Press Releases</button>
             <button className="text-foreground font-medium text-base pb-3 transition-colors hover:text-primary">Publications</button>
           </div>
 
-          {/* Section Intro - removed label as per previous turn, description remains */}
+          {/* Section Intro */}
           <div className="text-xl font-bold mb-8 text-foreground tracking-tight">All Precigenetics updates, research, and company news</div>
 
           {/* Action Bar: Search & Filters */}
@@ -217,7 +217,7 @@ const Blog = () => {
             </div>
           </div>
 
-          {/* Categories Grid - Increased button width with px-6 */}
+          {/* Categories Grid */}
           <div className="font-extrabold text-lg mb-3 text-foreground relative z-10 tracking-tight">Categories</div>
           <div className="flex flex-wrap gap-2.5 mb-10 relative z-10">
             {categories.map((cat) => (
@@ -243,16 +243,17 @@ const Blog = () => {
               filtered.map((post, i) => (
                 <AnimatedSection key={post.title} delay={i * 0.1}>
                   <article className="flex flex-col md:flex-row gap-2 md:gap-[40px] mb-8 group">
-                    <div className="text-slate-500 text-sm md:min-w-[90px] md:pt-1 font-bold tracking-tight">
+                    <div className="text-slate-500 text-sm md:min-w-[90px] md:pt-1 font-semibold tracking-tight">
                       {post.date}
                     </div>
                     <div className="flex-1">
-                      <h2 className="text-lg md:text-[22px] text-primary font-extrabold mb-2.5 leading-[1.3] group-hover:underline cursor-pointer decoration-2 underline-offset-4 tracking-tight">
+                      {/* Changed from font-extrabold to font-semibold for the news title */}
+                      <h2 className="text-lg md:text-[22px] text-primary font-semibold mb-2.5 leading-[1.3] group-hover:underline cursor-pointer decoration-2 underline-offset-4 tracking-tight">
                         {post.title}
                       </h2>
                       <div className="flex flex-wrap gap-2 mt-1">
                         {post.tags.map((tag) => (
-                          <span key={tag} className="border-[2px] border-primary bg-primary/5 text-primary px-3 py-1 rounded-md text-[11px] font-normal tracking-wide uppercase">
+                          <span key={tag} className="border-[2px] border-primary bg-primary/5 text-primary px-3 py-1 rounded-md text-[11px] font-medium tracking-wide uppercase">
                             {tag}
                           </span>
                         ))}
@@ -262,7 +263,7 @@ const Blog = () => {
                 </AnimatedSection>
               ))
             ) : (
-              <div className="text-center py-10 text-slate-500 font-bold text-base">
+              <div className="text-center py-10 text-slate-500 font-semibold text-base">
                 No articles found matching your search criteria.
               </div>
             )}
