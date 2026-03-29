@@ -1,4 +1,4 @@
-import { Microscope, Dna, ScanCore, Play } from "lucide-react";
+import { Microscope, Dna, ScanSearch, Play } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
 import AnimatedSection from "@/components/AnimatedSection";
 
