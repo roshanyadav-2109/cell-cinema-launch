@@ -41,8 +41,8 @@ const Blog = () => {
   return (
     <PageLayout title="Newsroom" description="The latest from Precigenetics — research updates, industry perspectives, and company news.">
       
-      {/* Wrapper with overflow-clip to prevent any unwanted scrollbars from the absolute background */}
-      <div className="relative w-full overflow-clip">
+      {/* Wrapper with overflow-clip and the exact font applied */}
+      <div className="relative w-full overflow-clip" style={{ fontFamily: "'Inter', sans-serif" }}>
         
         {/* Animated Top Right Graphic: Pure CSS DNA Diagonal */}
         <div className="absolute top-0 right-0 w-full max-w-[600px] h-[450px] overflow-hidden -z-10 pointer-events-none rounded-bl-[100px]">
@@ -51,11 +51,14 @@ const Blog = () => {
           
           <style>
             {`
+              /* Import the exact font weights needed */
+              @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
               .dna-container {
                 position: absolute;
                 top: -20px;
                 right: 80px;
-                transform: rotate(45deg) scale(1); /* Scaled down slightly to prevent overflow */
+                transform: rotate(45deg) scale(1);
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -141,17 +144,17 @@ const Blog = () => {
           </div>
         </div>
 
-        {/* Main Content Container - Adjusted pt (padding-top) and mt (margin-top) to move it higher */}
+        {/* Main Content Container */}
         <div className="max-w-[1200px] mx-auto px-6 md:px-10 pb-20 pt-16 relative">
           
           {/* Header */}
           <header>
-            <h1 className="text-[36px] md:text-[52px] font-bold mt-4 md:mt-8 mb-[30px] md:mb-[40px] max-w-[800px] leading-[1.1] text-foreground">
+            <h1 className="text-[36px] md:text-[52px] font-bold mt-4 md:mt-8 mb-[30px] md:mb-[40px] max-w-[800px] leading-[1.1] text-foreground tracking-tight">
               Welcome to the Precigenetics Newsroom
             </h1>
           </header>
 
-          {/* Secondary Nav Tabs (Added hide-scrollbar class) */}
+          {/* Secondary Nav Tabs */}
           <div className="flex gap-8 py-5 border-b-2 border-slate-200 mb-10 overflow-x-auto whitespace-nowrap hide-scrollbar">
             <button className="text-primary font-bold text-lg pb-4 border-b-4 border-primary -mb-[22px]">News & Insights</button>
             <button className="text-foreground font-medium text-lg pb-4 transition-colors hover:text-primary">Press Releases</button>
@@ -159,8 +162,8 @@ const Blog = () => {
           </div>
 
           {/* Section Intro */}
-          <div className="text-slate-500 text-sm mb-2.5 font-medium">News & Insights</div>
-          <div className="text-2xl font-medium mb-10 text-foreground">All Precigenetics updates, research, and company news</div>
+          <div className="text-slate-500 text-sm mb-2.5 font-medium uppercase tracking-wider">News & Insights</div>
+          <div className="text-2xl font-medium mb-10 text-foreground tracking-tight">All Precigenetics updates, research, and company news</div>
 
           {/* Action Bar: Search & Filters */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-8 md:gap-10">
@@ -172,7 +175,7 @@ const Blog = () => {
                 placeholder="Search for News & Insights"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="border-none outline-none text-[20px] md:text-[22px] w-full text-foreground placeholder:text-slate-400 bg-transparent"
+                className="border-none outline-none text-[20px] md:text-[22px] w-full text-foreground placeholder:text-slate-400 bg-transparent font-medium"
               />
               <button className="w-9 h-9 border border-slate-400 rounded-full flex items-center justify-center text-slate-500 hover:text-primary hover:border-primary transition-colors flex-shrink-0">
                 <ArrowRight className="w-4 h-4" />
@@ -194,9 +197,9 @@ const Blog = () => {
                 
                 {isYearDropdownOpen && (
                   <div className="absolute top-full right-0 md:left-0 mt-2 bg-card border border-border rounded-2xl shadow-lg min-w-[200px] p-5">
-                    <span className="text-slate-500 text-sm block mb-4 font-medium">Year</span>
+                    <span className="text-slate-500 text-sm block mb-4 font-medium uppercase tracking-wider">Year</span>
                     {["2026", "2025", "2024", "2023"].map((year) => (
-                      <label key={year} className="flex items-center mb-3 cursor-pointer text-lg text-foreground hover:text-primary transition-colors">
+                      <label key={year} className="flex items-center mb-3 cursor-pointer text-lg text-foreground hover:text-primary transition-colors font-medium">
                         <input type="checkbox" className="hidden peer" />
                         <div className="w-[22px] h-[22px] border border-slate-400 rounded-md mr-4 relative peer-checked:bg-primary peer-checked:border-primary flex items-center justify-center transition-colors">
                           <div className="hidden peer-checked:block w-1.5 h-2.5 border-b-2 border-r-2 border-primary-foreground transform rotate-45 -mt-0.5"></div>
@@ -218,7 +221,7 @@ const Blog = () => {
           </div>
 
           {/* Categories Grid */}
-          <div className="font-bold text-lg mb-4 text-foreground relative z-10">Categories</div>
+          <div className="font-bold text-lg mb-4 text-foreground relative z-10 tracking-tight">Categories</div>
           <div className="flex flex-wrap gap-3 mb-12 relative z-10">
             {categories.map((cat) => (
               <button
@@ -243,11 +246,11 @@ const Blog = () => {
               filtered.map((post, i) => (
                 <AnimatedSection key={post.title} delay={i * 0.1}>
                   <article className="flex flex-col md:flex-row gap-2 md:gap-[60px] mb-10 group">
-                    <div className="text-slate-500 text-base md:min-w-[100px] md:pt-1 font-medium">
+                    <div className="text-slate-500 text-base md:min-w-[100px] md:pt-1 font-medium tracking-tight">
                       {post.date}
                     </div>
                     <div className="flex-1">
-                      <h2 className="text-xl md:text-[24px] text-primary font-medium mb-3.5 leading-[1.3] group-hover:underline cursor-pointer decoration-2 underline-offset-4">
+                      <h2 className="text-xl md:text-[24px] text-primary font-semibold mb-3.5 leading-[1.3] group-hover:underline cursor-pointer decoration-2 underline-offset-4 tracking-tight">
                         {post.title}
                       </h2>
                       <div className="flex flex-wrap gap-2.5 mt-1">
