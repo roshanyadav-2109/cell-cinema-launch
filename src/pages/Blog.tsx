@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, Dna } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
 import AnimatedSection from "@/components/AnimatedSection";
 
 const categories = ["All", "Company News", "Research", "Industry", "Platform"];
 
-// Expanded to fit the new list format
 const posts = [
   {
     date: "03.15.2026",
@@ -41,10 +40,45 @@ const Blog = () => {
 
   return (
     <PageLayout title="Newsroom" description="The latest from Precigenetics — research updates, industry perspectives, and company news.">
-      {/* Top Graphic Mockup - adapted to use theme colors via Tailwind */}
-      <div className="absolute top-0 right-0 w-[350px] h-[350px] bg-[radial-gradient(circle_at_top_right,theme(colors.primary.DEFAULT/0.1)_0%,transparent_70%)] rounded-bl-full -z-10 pointer-events-none"></div>
+      
+      {/* Animated Top Right Graphic: Floating DNA */}
+      <div className="absolute top-0 right-0 w-full md:w-[600px] h-[400px] overflow-hidden -z-10 pointer-events-none rounded-bl-[100px]">
+        {/* Soft radial glow to ground the animation */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,theme(colors.primary.DEFAULT/0.05)_0%,transparent_70%)]"></div>
+        
+        {/* Custom Keyframes for corner-to-corner movement */}
+        <style>
+          {`
+            @keyframes dna-float-1 {
+              0% { transform: translate(100%, -50%) rotate(0deg); }
+              50% { transform: translate(-20%, 80%) rotate(180deg); }
+              100% { transform: translate(100%, -50%) rotate(360deg); }
+            }
+            @keyframes dna-float-2 {
+              0% { transform: translate(-20%, 80%) rotate(45deg); }
+              50% { transform: translate(100%, -20%) rotate(-135deg); }
+              100% { transform: translate(-20%, 80%) rotate(45deg); }
+            }
+          `}
+        </style>
 
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10 pb-24 pt-32">
+        {/* Floating DNA Molecules */}
+        <div 
+          className="absolute top-0 right-0 text-primary/10" 
+          style={{ animation: 'dna-float-1 25s linear infinite' }}
+        >
+          <Dna className="w-[300px] h-[300px]" strokeWidth={0.5} />
+        </div>
+        
+        <div 
+          className="absolute top-0 right-0 text-primary/10" 
+          style={{ animation: 'dna-float-2 35s linear infinite' }}
+        >
+          <Dna className="w-[200px] h-[200px]" strokeWidth={0.5} />
+        </div>
+      </div>
+
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10 pb-24 pt-32 relative">
         {/* Header */}
         <header>
           <h1 className="text-[40px] md:text-[56px] font-bold mt-10 md:mt-[60px] mb-[40px] md:mb-[50px] max-w-[800px] leading-[1.1] text-foreground">
@@ -85,7 +119,7 @@ const Blog = () => {
             <span className="text-primary font-semibold text-sm hidden md:block">Filter Options</span>
             
             {/* Archive Dropdown */}
-            <div className="relative">
+            <div className="relative z-20">
               <button 
                 onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
                 className="px-5 py-2.5 border border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-semibold text-base flex items-center gap-3 min-w-[160px] justify-between"
@@ -94,7 +128,7 @@ const Blog = () => {
               </button>
               
               {isYearDropdownOpen && (
-                <div className="absolute top-full right-0 md:left-0 mt-2 bg-card border border-border rounded-2xl shadow-lg min-w-[200px] p-5 z-20">
+                <div className="absolute top-full right-0 md:left-0 mt-2 bg-card border border-border rounded-2xl shadow-lg min-w-[200px] p-5">
                   <span className="text-slate-500 text-sm block mb-4 font-medium">Year</span>
                   {["2026", "2025", "2024", "2023"].map((year) => (
                     <label key={year} className="flex items-center mb-3 cursor-pointer text-lg text-foreground hover:text-primary transition-colors">
@@ -126,7 +160,7 @@ const Blog = () => {
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`px-5 py-2.5 border rounded-lg text-sm font-semibold transition-colors ${
+              className={`px-5 py-2.5 border rounded-lg text-sm font-semibold transition-colors z-10 relative ${
                 filter === cat
                   ? "bg-primary text-primary-foreground border-primary"
                   : "bg-primary/5 text-primary border-primary hover:bg-primary/10"
@@ -140,7 +174,7 @@ const Blog = () => {
         <hr className="border-t border-slate-200 mb-12" />
 
         {/* News Items List */}
-        <div className="flex flex-col">
+        <div className="flex flex-col relative z-10">
           {filtered.length > 0 ? (
             filtered.map((post, i) => (
               <AnimatedSection key={post.title} delay={i * 0.1}>
