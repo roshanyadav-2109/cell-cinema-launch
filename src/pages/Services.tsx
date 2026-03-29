@@ -23,7 +23,7 @@ const capabilitiesData = [
     title: "Single-Cell Resolution",
     description:
       "Population averages hide the biology that matters. We extract high-dimensional chemical signatures from individual cells, resolving the heterogeneity that drives drug resistance.",
-    icon: ScanCore,
+    icon: ScanSearch,
     imagePlaceholder: "https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=1000&auto=format&fit=crop",
     isVideo: true,
   },
