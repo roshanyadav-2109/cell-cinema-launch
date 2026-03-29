@@ -29,11 +29,11 @@ const Platform = () => {
       {/* Wrapper forcing the white background and Inter font */}
       <div className="w-full bg-[#ffffff]" style={{ fontFamily: "'Inter', sans-serif" }}>
         
-        {/* 1. Hero Tagline Section (Takes up top ~25-30% of the screen) */}
-        <div className="w-full min-h-[30vh] md:min-h-[35vh] flex flex-col items-center justify-center px-6 pt-28 pb-10 text-center relative z-10">
-          <h1 className="text-[36px] md:text-[52px] lg:text-[60px] font-extrabold tracking-tight leading-[1.1] text-slate-900 max-w-[1100px] mb-8 drop-shadow-sm">
-            You can't fix what you can't see happening. <br className="hidden md:block" />
-            <span className="text-primary">We see unseen biology.</span>
+        {/* 1. Hero Tagline Section (Sits flat above the video) */}
+        <div className="w-full flex flex-col items-center justify-center px-6 pt-32 pb-12 text-center relative z-10">
+          <h1 className="text-[32px] md:text-[48px] lg:text-[56px] font-semibold tracking-tight leading-[1.2] max-w-[1100px] mb-8">
+            <span className="text-slate-900">You can't fix what you can't see happening.</span> <br className="hidden md:block" />
+            <span className="text-slate-500">We see unseen biology.</span>
           </h1>
           
           {/* Subline with Logo */}
@@ -47,9 +47,9 @@ const Platform = () => {
           </div>
         </div>
 
-        {/* 2. Video Frame (Full width, rounded top, flat bottom) */}
-        <div className="w-full h-[60vh] md:h-[75vh] relative z-10">
-          <div className="w-full h-full overflow-hidden bg-[#000000] relative rounded-t-[40px] md:rounded-t-[80px] rounded-b-none shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+        {/* 2. Video Frame (Full width, flat top, 25% rounded bottom) */}
+        <div className="w-full h-[60vh] md:h-[75vh] relative z-10 mb-10">
+          <div className="w-full h-full overflow-hidden bg-[#000000] relative rounded-t-none rounded-b-[15%] md:rounded-b-[25%] shadow-[0_15px_40px_rgba(0,0,0,0.08)]">
             {/* YouTube Embed: Muted, Autoplay, No Controls, and pointer-events-none to disable hover overlays */}
             <iframe
               className="absolute inset-0 w-full h-full pointer-events-none select-none scale-105" // scale-105 hides faint YouTube iframe borders
@@ -63,7 +63,7 @@ const Platform = () => {
             
             {/* Internal overlay and text mimicking the uploaded design */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
-            <div className="absolute bottom-10 left-8 md:bottom-16 md:left-16 pointer-events-none">
+            <div className="absolute bottom-12 left-8 md:bottom-20 md:left-16 pointer-events-none">
               <h2 className="text-white text-3xl md:text-5xl font-medium tracking-tight drop-shadow-md">
                 Mapping the real-time dynamics of living cells.
               </h2>
@@ -72,7 +72,7 @@ const Platform = () => {
         </div>
 
         {/* Text & Narrative Container */}
-        <div className="max-w-[1000px] mx-auto px-6 pt-16 md:pt-[100px]">
+        <div className="max-w-[1000px] mx-auto px-6 pt-10 md:pt-16">
           
           {/* 3. Hero Typography */}
           <h2 className="text-[32px] md:text-[46px] font-medium tracking-tight leading-[1.15] mb-[80px] text-[#000000]">
