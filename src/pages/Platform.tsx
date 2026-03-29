@@ -29,8 +29,8 @@ const Platform = () => {
       {/* Wrapper forcing the white background and Inter font */}
       <div className="w-full bg-[#ffffff]" style={{ fontFamily: "'Inter', sans-serif" }}>
         
-        {/* 1. Hero Tagline Section (Sits flat above the video) */}
-        <div className="w-full flex flex-col items-center justify-center px-6 pt-32 pb-12 text-center relative z-10">
+        {/* 1. Hero Tagline Section (Takes up exactly 75% of the screen height) */}
+        <div className="w-full min-h-[75vh] flex flex-col items-center justify-center px-6 text-center relative z-10">
           <h1 className="text-[32px] md:text-[48px] lg:text-[56px] font-semibold tracking-tight leading-[1.2] max-w-[1100px] mb-8">
             <span className="text-slate-900">You can't fix what you can't see happening.</span> <br className="hidden md:block" />
             <span className="text-slate-500">We see unseen biology.</span>
@@ -47,9 +47,9 @@ const Platform = () => {
           </div>
         </div>
 
-        {/* 2. Video Frame (Full width, flat top, 25% rounded bottom) */}
+        {/* 2. Video Frame (Starts after 75% of the screen, rounded top, flat bottom) */}
         <div className="w-full h-[60vh] md:h-[75vh] relative z-10 mb-10">
-          <div className="w-full h-full overflow-hidden bg-[#000000] relative rounded-t-none rounded-b-[15%] md:rounded-b-[25%] shadow-[0_15px_40px_rgba(0,0,0,0.08)]">
+          <div className="w-full h-full overflow-hidden bg-[#000000] relative rounded-t-[40px] md:rounded-t-[80px] rounded-b-none shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
             {/* YouTube Embed: Muted, Autoplay, No Controls, and pointer-events-none to disable hover overlays */}
             <iframe
               className="absolute inset-0 w-full h-full pointer-events-none select-none scale-105" // scale-105 hides faint YouTube iframe borders
