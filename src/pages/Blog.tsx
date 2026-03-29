@@ -44,8 +44,8 @@ const Blog = () => {
       {/* Wrapper with overflow-clip and the exact font applied */}
       <div className="relative w-full overflow-clip" style={{ fontFamily: "'Inter', sans-serif" }}>
         
-        {/* Animated Top Right Graphic: Restricted to the Welcome Header Area */}
-        <div className="absolute top-0 right-0 w-full max-w-[500px] h-[280px] md:h-[320px] overflow-hidden -z-10 pointer-events-none rounded-bl-[80px]">
+        {/* Animated Top Right Graphic: Adjusted height to sit right above/behind the secondary nav row */}
+        <div className="absolute top-0 right-0 w-full max-w-[550px] h-[340px] md:h-[380px] overflow-hidden -z-10 pointer-events-none rounded-bl-[80px]">
           {/* Deep Purple/Violet radial glow */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(75,0,130,0.35)_0%,transparent_70%)]"></div>
           
@@ -55,9 +55,9 @@ const Blog = () => {
 
               .dna-container {
                 position: absolute;
-                top: -30px;
-                right: 60px;
-                transform: rotate(45deg) scale(0.7); /* Scaled down for the smaller height */
+                top: -10px;
+                right: 70px;
+                transform: rotate(45deg) scale(0.75); 
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -132,7 +132,7 @@ const Blog = () => {
 
           {/* The DNA Elements */}
           <div className="dna-container">
-            {Array.from({ length: 24 }).map((_, i) => (
+            {Array.from({ length: 28 }).map((_, i) => (
               <div 
                 key={i} 
                 className="strand" 
@@ -142,7 +142,7 @@ const Blog = () => {
           </div>
         </div>
 
-        {/* Main Content Container (Wider max-w to zoom out) */}
+        {/* Main Content Container */}
         <div className="max-w-[1280px] mx-auto px-6 md:px-12 pb-20 pt-16 relative">
           
           {/* Header */}
@@ -152,52 +152,51 @@ const Blog = () => {
             </h1>
           </header>
 
-          {/* Secondary Nav Tabs - Non Bold (font-medium), slightly smaller text */}
+          {/* Secondary Nav Tabs */}
           <div className="flex gap-8 py-4 border-b border-slate-200 mb-8 overflow-x-auto whitespace-nowrap hide-scrollbar">
             <button className="text-primary font-medium text-base pb-3 border-b-[3px] border-primary -mb-[18px]">News & Insights</button>
             <button className="text-foreground font-medium text-base pb-3 transition-colors hover:text-primary">Press Releases</button>
             <button className="text-foreground font-medium text-base pb-3 transition-colors hover:text-primary">Publications</button>
           </div>
 
-          {/* Section Intro */}
-          <div className="text-slate-500 text-xs mb-2 font-bold uppercase tracking-wider">News & Insights</div>
+          {/* Section Intro - Removed the "News & Insights" supertitle here */}
           <div className="text-xl font-bold mb-8 text-foreground tracking-tight">All Precigenetics updates, research, and company news</div>
 
           {/* Action Bar: Search & Filters */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6 md:gap-8">
             
-            {/* Custom Search Field */}
+            {/* Custom Search Field (Non-bold) */}
             <div className="flex-1 flex items-center border-b-[2px] border-slate-300 pb-2 w-full transition-colors focus-within:border-primary">
               <input
                 type="text"
                 placeholder="Search for News & Insights"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="border-none outline-none text-[18px] md:text-[20px] w-full text-foreground placeholder:text-slate-400 bg-transparent font-bold"
+                className="border-none outline-none text-[18px] md:text-[20px] w-full text-foreground placeholder:text-slate-400 bg-transparent font-medium"
               />
               <button className="w-8 h-8 border-[2px] border-slate-400 rounded-full flex items-center justify-center text-slate-500 hover:text-primary hover:border-primary transition-colors flex-shrink-0">
-                <ArrowRight className="w-4 h-4 stroke-[3]" />
+                <ArrowRight className="w-4 h-4 stroke-[2]" />
               </button>
             </div>
 
-            {/* Filter Controls */}
+            {/* Filter Controls (Non-bold) */}
             <div className="flex items-center gap-3 w-full md:w-auto relative z-20">
-              <span className="text-primary font-bold text-sm hidden md:block whitespace-nowrap">Filter Options</span>
+              <span className="text-primary font-medium text-sm hidden md:block whitespace-nowrap">Filter Options</span>
               
               {/* Archive Dropdown */}
               <div className="relative">
                 <button 
                   onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
-                  className="px-4 py-2 border-[2px] border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-bold text-sm flex items-center gap-2 min-w-[130px] justify-between"
+                  className="px-4 py-2 border-[2px] border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-medium text-sm flex items-center gap-2 min-w-[130px] justify-between"
                 >
-                  Archive Date <ChevronDown className="w-4 h-4 stroke-[3]" />
+                  Archive Date <ChevronDown className="w-4 h-4 stroke-[2]" />
                 </button>
                 
                 {isYearDropdownOpen && (
                   <div className="absolute top-full right-0 md:left-0 mt-2 bg-card border-[2px] border-border rounded-xl shadow-lg min-w-[180px] p-4">
-                    <span className="text-slate-500 text-xs block mb-3 font-bold uppercase tracking-wider">Year</span>
+                    <span className="text-slate-500 text-xs block mb-3 font-medium uppercase tracking-wider">Year</span>
                     {["2026", "2025", "2024", "2023"].map((year) => (
-                      <label key={year} className="flex items-center mb-2.5 cursor-pointer text-base text-foreground hover:text-primary transition-colors font-bold">
+                      <label key={year} className="flex items-center mb-2.5 cursor-pointer text-base text-foreground hover:text-primary transition-colors font-medium">
                         <input type="checkbox" className="hidden peer" />
                         <div className="w-[18px] h-[18px] border-[2px] border-slate-400 rounded-md mr-3 relative peer-checked:bg-primary peer-checked:border-primary flex items-center justify-center transition-colors">
                           <div className="hidden peer-checked:block w-1 h-2 border-b-[2px] border-r-[2px] border-primary-foreground transform rotate-45 -mt-0.5"></div>
@@ -210,7 +209,7 @@ const Blog = () => {
               </div>
 
               {/* View Select */}
-              <select className="px-4 py-2 border-[2px] border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-bold text-sm appearance-none pr-8 cursor-pointer bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%24%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:calc(100%-10px)_center] bg-[length:14px]">
+              <select className="px-4 py-2 border-[2px] border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-medium text-sm appearance-none pr-8 cursor-pointer bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%24%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:calc(100%-10px)_center] bg-[length:14px]">
                 <option>View 10</option>
                 <option>View 25</option>
                 <option>View All</option>
@@ -225,7 +224,7 @@ const Blog = () => {
               <button
                 key={cat}
                 onClick={() => setFilter(cat)}
-                className={`px-4 py-2 border-[2px] rounded-lg text-xs font-bold transition-colors ${
+                className={`px-4 py-2 border-[2px] rounded-lg text-xs font-medium transition-colors ${
                   filter === cat
                     ? "bg-primary text-primary-foreground border-primary"
                     : "bg-primary/5 text-primary border-primary hover:bg-primary/10"
