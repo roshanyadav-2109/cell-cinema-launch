@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ArrowRight, ChevronDown } from "lucide-react";
+import { Link } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
 import AnimatedSection from "@/components/AnimatedSection";
 
@@ -7,22 +8,25 @@ const categories = ["All", "Company News", "Research", "Industry", "Platform"];
 
 const posts = [
   {
-    date: "03.15.2026",
+    date: "03.24.2026",
     category: "Company News",
-    title: "Precigenetics Launches Cell Cinema Platform at MBC BioLabs",
-    tags: ["Company News", "Platform"],
+    title: "Precigenetics Invites Public to View and Listen to Webcast of May 5 Conference Call with Analysts",
+    tags: ["Company News", "Financial"],
+    slug: "precigenetics-webcast-may-2026",
   },
   {
     date: "02.28.2026",
     category: "Research",
     title: "Why Real-Time Matters: Moving Beyond Endpoint Assays",
     tags: ["Research", "Scientific"],
+    slug: null,
   },
   {
     date: "01.20.2026",
     category: "Industry",
     title: "FDA's Shift Away from Animal Testing: What It Means for Drug Discovery",
     tags: ["Industry", "Regulatory"],
+    slug: null,
   },
 ];
 
@@ -242,23 +246,45 @@ const Blog = () => {
             {filtered.length > 0 ? (
               filtered.map((post, i) => (
                 <AnimatedSection key={post.title} delay={i * 0.1}>
-                  <article className="flex flex-col md:flex-row gap-2 md:gap-[40px] mb-8 group">
-                    <div className="text-slate-500 text-[15px] md:min-w-[90px] md:pt-1 font-semibold tracking-tight">
-                      {post.date}
-                    </div>
-                    <div className="flex-1">
-                      <h2 className="text-[20px] md:text-[22px] text-primary font-semibold mb-3 leading-[1.3] group-hover:underline cursor-pointer decoration-2 underline-offset-4 tracking-tight">
-                        {post.title}
-                      </h2>
-                      <div className="flex flex-wrap gap-2 mt-1">
-                        {post.tags.map((tag) => (
-                          <span key={tag} className="border-[2px] border-primary bg-primary/5 text-slate-900 dark:text-slate-100 px-3 py-1 rounded-md text-[11px] font-medium tracking-wide uppercase">
-                            {tag}
-                          </span>
-                        ))}
+                  {post.slug ? (
+                    <Link to={`/news/${post.slug}`} className="block">
+                      <article className="flex flex-col md:flex-row gap-2 md:gap-[40px] mb-8 group">
+                        <div className="text-slate-500 text-[15px] md:min-w-[90px] md:pt-1 font-semibold tracking-tight">
+                          {post.date}
+                        </div>
+                        <div className="flex-1">
+                          <h2 className="text-[20px] md:text-[22px] text-primary font-semibold mb-3 leading-[1.3] group-hover:underline cursor-pointer decoration-2 underline-offset-4 tracking-tight">
+                            {post.title}
+                          </h2>
+                          <div className="flex flex-wrap gap-2 mt-1">
+                            {post.tags.map((tag) => (
+                              <span key={tag} className="border-[2px] border-primary bg-primary/5 text-slate-900 dark:text-slate-100 px-3 py-1 rounded-md text-[11px] font-medium tracking-wide uppercase">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </article>
+                    </Link>
+                  ) : (
+                    <article className="flex flex-col md:flex-row gap-2 md:gap-[40px] mb-8 opacity-90">
+                      <div className="text-slate-500 text-[15px] md:min-w-[90px] md:pt-1 font-semibold tracking-tight">
+                        {post.date}
                       </div>
-                    </div>
-                  </article>
+                      <div className="flex-1">
+                        <h2 className="text-[20px] md:text-[22px] text-primary font-semibold mb-3 leading-[1.3] tracking-tight">
+                          {post.title}
+                        </h2>
+                        <div className="flex flex-wrap gap-2 mt-1">
+                          {post.tags.map((tag) => (
+                            <span key={tag} className="border-[2px] border-primary bg-primary/5 text-slate-900 dark:text-slate-100 px-3 py-1 rounded-md text-[11px] font-medium tracking-wide uppercase">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </article>
+                  )}
                 </AnimatedSection>
               ))
             ) : (
