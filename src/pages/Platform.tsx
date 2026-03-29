@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import PageLayout from "@/components/PageLayout";
 
 const capabilities = [
@@ -24,52 +23,36 @@ const capabilities = [
 const scrollCards = [...capabilities, ...capabilities, ...capabilities];
 
 const Platform = () => {
-  const [scrollProgress, setScrollProgress] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Calculate progress between 0 and 1 over the first 500px of scrolling for a smoother scale
-      let progress = window.scrollY / 500;
-      if (progress > 1) progress = 1;
-      if (progress < 0) progress = 0;
-      setScrollProgress(progress);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Using transform: scale ensures the frame maintains its exact aspect ratio, 
-  // preventing the video inside from "zooming" or reflowing.
-  const scale = 1 - (scrollProgress * 0.12); // Scales from 100% down to 88%
-  const translateY = scrollProgress * 6; // Pushes the scaled element down (up to 6vh) to perfectly center it in the empty space it creates
-  const borderRadius = scrollProgress * 24; // Scales from 0px up to 24px
-
   return (
     <PageLayout title="Platform" description="The first platform for real-time chemical imaging.">
       
       {/* Wrapper forcing the white background and Inter font */}
       <div className="w-full bg-[#ffffff]" style={{ fontFamily: "'Inter', sans-serif" }}>
         
-        {/* 1. Video Hero Frame (Animates via Transform Scale) */}
-        {/* The outer wrapper reserves the full screen height in the document flow */}
-        <div className="w-full h-[90vh] md:h-screen bg-transparent relative flex flex-col justify-start z-10">
+        {/* 1. Hero Tagline Section (Takes up top ~25-30% of the screen) */}
+        <div className="w-full min-h-[30vh] md:min-h-[35vh] flex flex-col items-center justify-center px-6 pt-28 pb-10 text-center relative z-10">
+          <h1 className="text-[36px] md:text-[52px] lg:text-[60px] font-extrabold tracking-tight leading-[1.1] text-slate-900 max-w-[1100px] mb-8 drop-shadow-sm">
+            You can't fix what you can't see happening. <br className="hidden md:block" />
+            <span className="text-primary">We see unseen biology.</span>
+          </h1>
           
-          {/* The inner element is the actual frame that scales down visually */}
-          <div 
-            className="w-full h-full overflow-hidden bg-[#000000] relative shadow-[0_10px_40px_rgba(0,0,0,0.08)]"
-            style={{
-              transform: `translateY(${translateY}vh) scale(${scale})`,
-              transformOrigin: 'top center',
-              borderRadius: `${borderRadius}px`,
-              willChange: 'transform, border-radius'
-            }}
-          >
+          {/* Subline with Logo */}
+          <div className="flex items-center justify-center gap-3 text-slate-500 font-medium text-sm md:text-lg tracking-wide">
+            <span>* Incubated at</span>
+            <img 
+              src="https://mbcbiolabs.com/wp-content/uploads/2023/03/MBC-BioLabs-logo.svg" 
+              alt="MBC BioLabs" 
+              className="h-6 md:h-8" 
+            />
+          </div>
+        </div>
+
+        {/* 2. Video Frame (Full width, rounded top, flat bottom) */}
+        <div className="w-full h-[60vh] md:h-[75vh] relative z-10">
+          <div className="w-full h-full overflow-hidden bg-[#000000] relative rounded-t-[40px] md:rounded-t-[80px] rounded-b-none shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
             {/* YouTube Embed: Muted, Autoplay, No Controls, and pointer-events-none to disable hover overlays */}
             <iframe
-              className="absolute inset-0 w-full h-full pointer-events-none select-none"
+              className="absolute inset-0 w-full h-full pointer-events-none select-none scale-105" // scale-105 hides faint YouTube iframe borders
               src="https://www.youtube.com/embed/b0aYlwBE7nk?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=b0aYlwBE7nk&controls=0&disablekb=1"
               title="Cell Cinema Platform Video"
               frameBorder="0"
@@ -79,7 +62,7 @@ const Platform = () => {
             ></iframe>
             
             {/* Internal overlay and text mimicking the uploaded design */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
             <div className="absolute bottom-10 left-8 md:bottom-16 md:left-16 pointer-events-none">
               <h2 className="text-white text-3xl md:text-5xl font-medium tracking-tight drop-shadow-md">
                 Mapping the real-time dynamics of living cells.
@@ -89,14 +72,14 @@ const Platform = () => {
         </div>
 
         {/* Text & Narrative Container */}
-        <div className="max-w-[1000px] mx-auto px-6 pt-10 md:pt-[60px]">
+        <div className="max-w-[1000px] mx-auto px-6 pt-16 md:pt-[100px]">
           
-          {/* 2. Hero Typography */}
-          <h1 className="text-[32px] md:text-[46px] font-medium tracking-tight leading-[1.15] mb-[80px] text-[#000000]">
+          {/* 3. Hero Typography */}
+          <h2 className="text-[32px] md:text-[46px] font-medium tracking-tight leading-[1.15] mb-[80px] text-[#000000]">
             Drug discovery today relies on <span className="text-[#9EA3AC]">dead cells and delayed readouts.</span> By the time you see what happened, the biology has already moved on. We built a platform that watches the chemistry unfold live.
-          </h1>
+          </h2>
 
-          {/* 3. Shortened Narrative */}
+          {/* 4. Shortened Narrative */}
           <div className="max-w-[800px] mb-[120px] text-[#1a1a1a] text-[18px] md:text-[20px] leading-[1.6] space-y-[35px]">
             <p>
               Traditional drug discovery relies on snapshots. We often miss the dynamic nature of living systems because critical signaling and toxicity events happen in real time. By the time we look at the data the biology has already moved on.
@@ -116,7 +99,7 @@ const Platform = () => {
           </div>
         </div>
 
-        {/* 4. Horizontal Gallery (Continuous Scroll with Tall Cards) */}
+        {/* 5. Horizontal Gallery (Continuous Scroll with Tall Cards) */}
         <div className="pb-[100px] overflow-hidden w-full relative">
           
           <style>
