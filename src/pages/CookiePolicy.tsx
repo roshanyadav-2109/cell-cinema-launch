@@ -1,7 +1,7 @@
 import PageLayout from "@/components/PageLayout";
 
 const sections = [
-  { title: "1. Introduction", content: "This Cookie Policy explains how Precigenetics, Inc. ("we", "our", "us") uses cookies and similar tracking technologies when you visit our website www.precigenetics.com." },
+  { title: "1. Introduction", content: "This Cookie Policy explains how Precigenetics, Inc. (\"we\", \"our\", \"us\") uses cookies and similar tracking technologies when you visit our website www.precigenetics.com." },
   { title: "2. What Are Cookies?", content: "Cookies are small data files placed on your computer or mobile device when you visit a website. They are widely used to make websites work efficiently and to provide information to website owners.", list: ["First-party cookies are set by the website you are visiting.", "Third-party cookies are set by a service other than the website you are visiting, typically for analytics or functionality purposes."] },
   { title: "3. Types of Cookies We Use", subsections: [
     { subtitle: "Essential Cookies", text: "Required for the basic functionality and security of our website. These cookies cannot be disabled." },
