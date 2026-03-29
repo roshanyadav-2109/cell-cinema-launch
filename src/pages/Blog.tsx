@@ -44,21 +44,20 @@ const Blog = () => {
       {/* Wrapper with overflow-clip and the exact font applied */}
       <div className="relative w-full overflow-clip" style={{ fontFamily: "'Inter', sans-serif" }}>
         
-        {/* Animated Top Right Graphic: Pure CSS DNA Diagonal with Deep Purple Glow */}
-        <div className="absolute top-0 right-0 w-full max-w-[600px] h-[450px] overflow-hidden -z-10 pointer-events-none rounded-bl-[100px]">
+        {/* Animated Top Right Graphic: Restricted to the Welcome Header Area */}
+        <div className="absolute top-0 right-0 w-full max-w-[500px] h-[280px] md:h-[320px] overflow-hidden -z-10 pointer-events-none rounded-bl-[80px]">
           {/* Deep Purple/Violet radial glow */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(75,0,130,0.35)_0%,transparent_70%)]"></div>
           
           <style>
             {`
-              /* Import heavier font weights to prevent the 'light' look */
-              @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap');
+              @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
               .dna-container {
                 position: absolute;
-                top: -20px;
-                right: 80px;
-                transform: rotate(45deg) scale(1);
+                top: -30px;
+                right: 60px;
+                transform: rotate(45deg) scale(0.7); /* Scaled down for the smaller height */
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -121,7 +120,6 @@ const Blog = () => {
                 }
               }
 
-              /* Hide scrollbar for the secondary nav tabs to avoid the horizontal slider */
               .hide-scrollbar::-webkit-scrollbar {
                 display: none;
               }
@@ -134,7 +132,7 @@ const Blog = () => {
 
           {/* The DNA Elements */}
           <div className="dna-container">
-            {Array.from({ length: 30 }).map((_, i) => (
+            {Array.from({ length: 24 }).map((_, i) => (
               <div 
                 key={i} 
                 className="strand" 
@@ -144,65 +142,65 @@ const Blog = () => {
           </div>
         </div>
 
-        {/* Main Content Container */}
-        <div className="max-w-[1200px] mx-auto px-6 md:px-10 pb-20 pt-16 relative">
+        {/* Main Content Container (Wider max-w to zoom out) */}
+        <div className="max-w-[1280px] mx-auto px-6 md:px-12 pb-20 pt-16 relative">
           
           {/* Header */}
           <header>
-            <h1 className="text-[36px] md:text-[52px] font-extrabold mt-4 md:mt-8 mb-[30px] md:mb-[40px] max-w-[800px] leading-[1.1] text-foreground tracking-tight">
+            <h1 className="text-[32px] md:text-[46px] font-extrabold mt-2 md:mt-4 mb-[24px] md:mb-[32px] max-w-[800px] leading-[1.1] text-foreground tracking-tight">
               Welcome to the Precigenetics Newsroom
             </h1>
           </header>
 
-          {/* Secondary Nav Tabs */}
-          <div className="flex gap-8 py-5 border-b-2 border-slate-200 mb-10 overflow-x-auto whitespace-nowrap hide-scrollbar">
-            <button className="text-primary font-extrabold text-lg pb-4 border-b-4 border-primary -mb-[22px]">News & Insights</button>
-            <button className="text-foreground font-bold text-lg pb-4 transition-colors hover:text-primary">Press Releases</button>
-            <button className="text-foreground font-bold text-lg pb-4 transition-colors hover:text-primary">Publications</button>
+          {/* Secondary Nav Tabs - Non Bold (font-medium), slightly smaller text */}
+          <div className="flex gap-8 py-4 border-b border-slate-200 mb-8 overflow-x-auto whitespace-nowrap hide-scrollbar">
+            <button className="text-primary font-medium text-base pb-3 border-b-[3px] border-primary -mb-[18px]">News & Insights</button>
+            <button className="text-foreground font-medium text-base pb-3 transition-colors hover:text-primary">Press Releases</button>
+            <button className="text-foreground font-medium text-base pb-3 transition-colors hover:text-primary">Publications</button>
           </div>
 
           {/* Section Intro */}
-          <div className="text-slate-500 text-sm mb-2.5 font-bold uppercase tracking-wider">News & Insights</div>
-          <div className="text-2xl font-bold mb-10 text-foreground tracking-tight">All Precigenetics updates, research, and company news</div>
+          <div className="text-slate-500 text-xs mb-2 font-bold uppercase tracking-wider">News & Insights</div>
+          <div className="text-xl font-bold mb-8 text-foreground tracking-tight">All Precigenetics updates, research, and company news</div>
 
           {/* Action Bar: Search & Filters */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-8 md:gap-10">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6 md:gap-8">
             
             {/* Custom Search Field */}
-            <div className="flex-1 flex items-center border-b-[2px] border-slate-300 pb-2.5 w-full transition-colors focus-within:border-primary">
+            <div className="flex-1 flex items-center border-b-[2px] border-slate-300 pb-2 w-full transition-colors focus-within:border-primary">
               <input
                 type="text"
                 placeholder="Search for News & Insights"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="border-none outline-none text-[20px] md:text-[22px] w-full text-foreground placeholder:text-slate-400 bg-transparent font-bold"
+                className="border-none outline-none text-[18px] md:text-[20px] w-full text-foreground placeholder:text-slate-400 bg-transparent font-bold"
               />
-              <button className="w-10 h-10 border-[2px] border-slate-400 rounded-full flex items-center justify-center text-slate-500 hover:text-primary hover:border-primary transition-colors flex-shrink-0">
-                <ArrowRight className="w-5 h-5 stroke-[3]" />
+              <button className="w-8 h-8 border-[2px] border-slate-400 rounded-full flex items-center justify-center text-slate-500 hover:text-primary hover:border-primary transition-colors flex-shrink-0">
+                <ArrowRight className="w-4 h-4 stroke-[3]" />
               </button>
             </div>
 
             {/* Filter Controls */}
-            <div className="flex items-center gap-4 w-full md:w-auto relative z-20">
+            <div className="flex items-center gap-3 w-full md:w-auto relative z-20">
               <span className="text-primary font-bold text-sm hidden md:block whitespace-nowrap">Filter Options</span>
               
               {/* Archive Dropdown */}
               <div className="relative">
                 <button 
                   onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
-                  className="px-5 py-2.5 border-[2px] border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-bold text-base flex items-center gap-3 min-w-[150px] justify-between"
+                  className="px-4 py-2 border-[2px] border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-bold text-sm flex items-center gap-2 min-w-[130px] justify-between"
                 >
-                  Archive Date <ChevronDown className="w-5 h-5 stroke-[3]" />
+                  Archive Date <ChevronDown className="w-4 h-4 stroke-[3]" />
                 </button>
                 
                 {isYearDropdownOpen && (
-                  <div className="absolute top-full right-0 md:left-0 mt-2 bg-card border-[2px] border-border rounded-2xl shadow-lg min-w-[200px] p-5">
-                    <span className="text-slate-500 text-sm block mb-4 font-bold uppercase tracking-wider">Year</span>
+                  <div className="absolute top-full right-0 md:left-0 mt-2 bg-card border-[2px] border-border rounded-xl shadow-lg min-w-[180px] p-4">
+                    <span className="text-slate-500 text-xs block mb-3 font-bold uppercase tracking-wider">Year</span>
                     {["2026", "2025", "2024", "2023"].map((year) => (
-                      <label key={year} className="flex items-center mb-3 cursor-pointer text-lg text-foreground hover:text-primary transition-colors font-bold">
+                      <label key={year} className="flex items-center mb-2.5 cursor-pointer text-base text-foreground hover:text-primary transition-colors font-bold">
                         <input type="checkbox" className="hidden peer" />
-                        <div className="w-[22px] h-[22px] border-[2px] border-slate-400 rounded-md mr-4 relative peer-checked:bg-primary peer-checked:border-primary flex items-center justify-center transition-colors">
-                          <div className="hidden peer-checked:block w-1.5 h-2.5 border-b-[3px] border-r-[3px] border-primary-foreground transform rotate-45 -mt-0.5"></div>
+                        <div className="w-[18px] h-[18px] border-[2px] border-slate-400 rounded-md mr-3 relative peer-checked:bg-primary peer-checked:border-primary flex items-center justify-center transition-colors">
+                          <div className="hidden peer-checked:block w-1 h-2 border-b-[2px] border-r-[2px] border-primary-foreground transform rotate-45 -mt-0.5"></div>
                         </div>
                         {year}
                       </label>
@@ -212,7 +210,7 @@ const Blog = () => {
               </div>
 
               {/* View Select */}
-              <select className="px-5 py-2.5 border-[2px] border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-bold text-base appearance-none pr-10 cursor-pointer bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%24%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:calc(100%-12px)_center] bg-[length:16px]">
+              <select className="px-4 py-2 border-[2px] border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-bold text-sm appearance-none pr-8 cursor-pointer bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%24%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:calc(100%-10px)_center] bg-[length:14px]">
                 <option>View 10</option>
                 <option>View 25</option>
                 <option>View All</option>
@@ -221,13 +219,13 @@ const Blog = () => {
           </div>
 
           {/* Categories Grid */}
-          <div className="font-extrabold text-xl mb-4 text-foreground relative z-10 tracking-tight">Categories</div>
-          <div className="flex flex-wrap gap-3 mb-12 relative z-10">
+          <div className="font-extrabold text-lg mb-3 text-foreground relative z-10 tracking-tight">Categories</div>
+          <div className="flex flex-wrap gap-2.5 mb-10 relative z-10">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setFilter(cat)}
-                className={`px-5 py-2.5 border-[2px] rounded-lg text-sm font-bold transition-colors ${
+                className={`px-4 py-2 border-[2px] rounded-lg text-xs font-bold transition-colors ${
                   filter === cat
                     ? "bg-primary text-primary-foreground border-primary"
                     : "bg-primary/5 text-primary border-primary hover:bg-primary/10"
@@ -238,24 +236,24 @@ const Blog = () => {
             ))}
           </div>
 
-          <hr className="border-t-[2px] border-slate-200 mb-10 relative z-10" />
+          <hr className="border-t-[2px] border-slate-200 mb-8 relative z-10" />
 
           {/* News Items List */}
           <div className="flex flex-col relative z-10">
             {filtered.length > 0 ? (
               filtered.map((post, i) => (
                 <AnimatedSection key={post.title} delay={i * 0.1}>
-                  <article className="flex flex-col md:flex-row gap-2 md:gap-[60px] mb-10 group">
-                    <div className="text-slate-500 text-base md:min-w-[100px] md:pt-1 font-bold tracking-tight">
+                  <article className="flex flex-col md:flex-row gap-2 md:gap-[40px] mb-8 group">
+                    <div className="text-slate-500 text-sm md:min-w-[90px] md:pt-1 font-bold tracking-tight">
                       {post.date}
                     </div>
                     <div className="flex-1">
-                      <h2 className="text-xl md:text-[24px] text-primary font-extrabold mb-3.5 leading-[1.3] group-hover:underline cursor-pointer decoration-2 underline-offset-4 tracking-tight">
+                      <h2 className="text-lg md:text-[22px] text-primary font-extrabold mb-2.5 leading-[1.3] group-hover:underline cursor-pointer decoration-2 underline-offset-4 tracking-tight">
                         {post.title}
                       </h2>
-                      <div className="flex flex-wrap gap-2.5 mt-1">
+                      <div className="flex flex-wrap gap-2 mt-1">
                         {post.tags.map((tag) => (
-                          <span key={tag} className="border-[2px] border-primary bg-primary/5 text-primary px-[14px] py-[5px] rounded-md text-xs font-extrabold tracking-wide">
+                          <span key={tag} className="border-[2px] border-primary bg-primary/5 text-primary px-3 py-1 rounded-md text-[11px] font-extrabold tracking-wide uppercase">
                             {tag}
                           </span>
                         ))}
@@ -265,7 +263,7 @@ const Blog = () => {
                 </AnimatedSection>
               ))
             ) : (
-              <div className="text-center py-10 text-slate-500 font-bold text-lg">
+              <div className="text-center py-10 text-slate-500 font-bold text-base">
                 No articles found matching your search criteria.
               </div>
             )}
