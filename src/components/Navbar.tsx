@@ -1,103 +1,150 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Download, Link as LinkIcon, Printer } from "lucide-react";
+import PageLayout from "@/components/PageLayout";
 
-const navLinks = [
-  { label: "Platform", path: "/platform" },
-  { label: "Capabilities", path: "/services" },
-  { label: "News", path: "/blog" },
-  { label: "Contact Us", path: "/contact" },
-];
-
-const Navbar = () => {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const location = useLocation();
-
-  const isPlatform = location.pathname === "/platform";
-
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [location.pathname]);
-
-  // If Platform: absolute positioning so it sits at the top and scrolls away naturally.
-  // If Other pages: sticky positioning so it stays attached to the top of the screen.
-  const headerClass = isPlatform
-    ? "absolute top-0 left-0 w-full z-50 bg-transparent"
-    : "sticky top-0 left-0 w-full z-50 bg-background/95 backdrop-blur-md shadow-sm border-b border-border/50";
-
+const Article = () => {
   return (
-    <header className={headerClass}>
-      <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between h-16 md:h-20">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-            <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="white" strokeWidth="2">
-              <circle cx="12" cy="12" r="3" />
-              <circle cx="12" cy="5" r="1.5" />
-              <circle cx="12" cy="19" r="1.5" />
-              <line x1="12" y1="6.5" x2="12" y2="9" />
-              <line x1="12" y1="15" x2="12" y2="17.5" />
-            </svg>
-          </div>
-          <span className="font-sans font-bold text-xl text-primary">
-            Precigenetics
-          </span>
-        </Link>
-
-        {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={`px-4 py-2 text-sm font-medium font-sans rounded-md transition-colors hover:text-primary ${
-                isPlatform ? "text-slate-900" : "text-foreground"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Desktop CTA */}
-        <div className="hidden lg:block">
-          <Button asChild className="rounded-lg font-semibold shadow-none">
-            <Link to="/contact">Get in Touch</Link>
-          </Button>
-        </div>
-
-        {/* Mobile Toggle */}
-        <button
-          className={`lg:hidden p-2 ${isPlatform ? "text-slate-900" : "text-foreground"}`}
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
+    <PageLayout title="News Article" description="Precigenetics Press Release and Announcements">
+      
+      {/* Wrapper to enforce the font family requested */}
+      <div className="w-full bg-[#ffffff] pb-24" style={{ fontFamily: "'Inter', sans-serif" }}>
+        
+        {/* 1. Hero Banner (Abstract Wave/Gradient) */}
+        <div 
+          className="w-full h-[260px] bg-cover bg-center relative"
+          style={{ 
+            backgroundImage: "url('https://images.unsplash.com/photo-1530026405186-ed1f139313f8?q=80&w=2000&auto=format&fit=crop')",
+          }}
         >
-          {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      {mobileOpen && (
-        <div className="lg:hidden bg-background border-t border-border animate-fade-in absolute top-full w-full left-0 shadow-lg pb-4 rounded-b-xl">
-          <nav className="flex flex-col px-6 py-4 gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className="px-4 py-3 text-sm font-medium font-sans rounded-md transition-colors text-foreground hover:bg-slate-50"
-              >
-                {link.label}
-              </Link>
-            ))}
-            <Button asChild className="mt-3 mx-4 rounded-lg font-semibold shadow-none">
-              <Link to="/contact">Get in Touch</Link>
-            </Button>
-          </nav>
+          {/* Overlay to tint it slightly toward the brand color */}
+          <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-transparent"></div>
         </div>
-      )}
-    </header>
+
+        {/* Main Page Container - Zoomed out feel */}
+        <div className="max-w-[1280px] mx-auto px-6 md:px-12 pt-10">
+          
+          {/* 2. Header Section (Starts ABOVE the sidebar split) */}
+          <div className="w-full max-w-[900px] mb-12">
+            
+            {/* Tags */}
+            <div className="flex flex-wrap gap-3 mb-6">
+              <span className="text-primary border border-primary px-4 py-1.5 rounded-full text-[13px] font-medium cursor-pointer hover:bg-primary/5 transition-colors">
+                Company News
+              </span>
+              <span className="text-primary border border-primary px-4 py-1.5 rounded-full text-[13px] font-medium cursor-pointer hover:bg-primary/5 transition-colors">
+                Financial
+              </span>
+            </div>
+
+            {/* Headline */}
+            <h1 className="text-[36px] md:text-[46px] font-semibold leading-[1.1] text-[#000000] mb-6 tracking-tight">
+              Precigenetics Invites Public to View and Listen to Webcast of May 5 Conference Call with Analysts
+            </h1>
+
+            {/* Date */}
+            <div className="text-[#666666] text-[16px]">
+              Tuesday, March 24, 2026 - 10:00am
+            </div>
+          </div>
+
+          {/* 3. Split Content Area (3/4th Left, 1/4th Right) */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 lg:gap-[60px]">
+            
+            {/* Left Column: Main Article Content (3/4 Width) */}
+            <main className="lg:col-span-3">
+              
+              {/* Action Tray (Strictly Black Icons) */}
+              <div className="flex gap-6 mb-10 border-b border-slate-100 pb-6">
+                <button className="text-[#000000] hover:text-primary transition-colors" title="Download PDF">
+                  <Download className="w-6 h-6 stroke-[2]" />
+                </button>
+                <button className="text-[#000000] hover:text-primary transition-colors" title="Copy Link">
+                  <LinkIcon className="w-6 h-6 stroke-[2]" />
+                </button>
+                <button className="text-[#000000] hover:text-primary transition-colors" title="Print">
+                  <Printer className="w-6 h-6 stroke-[2]" />
+                </button>
+              </div>
+
+              {/* Article Text */}
+              <div className="text-[18px] md:text-[19px] leading-[1.6] text-[#1a1a1a] space-y-6">
+                <p>
+                  <strong>NEW YORK—(BUSINESS WIRE)—</strong> Precigenetics Inc. invites investors and the general public to view and listen to a webcast of a conference call with investment analysts at 10:00 a.m. EDT on Tuesday, May 5, 2026.
+                </p>
+
+                <p>
+                  The purpose of the call is to provide an update on Precigenetics's results, as reflected in the company’s First Quarter 2026 Performance Report, to be issued that morning. Investors can access materials via the official investor relations portal.
+                </p>
+
+                <p>
+                  "We are moving drug discovery beyond endpoint assays with our new real-time chemical imaging platform," said the leadership team. "This webcast will outline how preserving the temporal dimension of biology allows us to detect subtle but meaningful changes that are otherwise overlooked in traditional models."
+                </p>
+
+                <p>
+                  To view and listen to the webcast and view the Performance Report, visit our web site at <a href="#" className="text-primary underline hover:no-underline">www.precigenetics.com/investors</a>. Information on accessing and registering for the webcast will be available on the site starting today.
+                </p>
+                
+                <p>
+                  <strong>About Precigenetics</strong><br/>
+                  At Precigenetics, we apply science and our global resources to bring therapies to people that extend and significantly improve their lives. We strive to set the standard for quality, safety and value in the discovery, development and manufacture of health care products, including innovative medicines and vaccines.
+                </p>
+              </div>
+            </main>
+
+            {/* Right Column: Sidebar Vertical (1/4 Width) */}
+            <aside className="lg:col-span-1 flex flex-col gap-6">
+              
+              {/* News Alert Card */}
+              <div className="bg-white border border-[#eeeeee] rounded-[16px] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.03)]">
+                <div 
+                  className="w-full h-[170px] bg-[#f0f0f0] bg-cover bg-center"
+                  style={{ backgroundImage: "url('https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80&w=800')" }}
+                ></div>
+                <div className="p-6">
+                  <h2 className="text-primary text-[20px] font-semibold mb-3 leading-[1.3]">
+                    Sign up for the latest Precigenetics news alerts
+                  </h2>
+                  <p className="text-[14px] text-[#666666] leading-[1.4]">
+                    Receive real-time updates on our news delivered directly to your inbox.
+                  </p>
+                </div>
+              </div>
+
+              {/* Black Explore Card */}
+              <div className="bg-[#000000] text-[#ffffff] p-[40px_24px] rounded-[16px] min-h-[200px] flex items-end cursor-pointer hover:bg-[#1a1a1a] transition-colors">
+                <h3 className="text-[32px] font-light leading-[1]">
+                  Explore<br/>Precigenetics
+                </h3>
+              </div>
+
+              {/* Related Resources Card */}
+              <div className="bg-white border border-[#eeeeee] rounded-[16px] p-6 shadow-[0_4px_15px_rgba(0,0,0,0.03)]">
+                <h4 className="mb-4 text-[14px] uppercase tracking-[1px] text-[#999999] font-semibold">
+                  Related Resources
+                </h4>
+                <ul className="space-y-3 list-none p-0 m-0">
+                  <li>
+                    <a href="#" className="text-primary font-medium hover:underline">2025 Annual Report</a>
+                  </li>
+                  <li>
+                    <a href="#" className="text-primary font-medium hover:underline">Investor Presentations</a>
+                  </li>
+                  <li>
+                    <a href="#" className="text-primary font-medium hover:underline">Executive Leadership</a>
+                  </li>
+                  <li>
+                    <a href="#" className="text-primary font-medium hover:underline">Platform Capabilities</a>
+                  </li>
+                </ul>
+              </div>
+
+            </aside>
+
+          </div>
+        </div>
+      </div>
+    </PageLayout>
   );
 };
 
-export default Navbar;
+export default Article;
