@@ -12,14 +12,33 @@ const navLinks = [
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+
+  const isPlatform = location.pathname === "/platform";
 
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Check immediately on mount
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Dynamically apply fixed/transparent styles on Platform, standard sticky on other pages
+  const headerClass = isPlatform
+    ? `fixed top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled ? "bg-background/95 backdrop-blur-md shadow-sm" : "bg-transparent"
+      }`
+    : `sticky top-0 w-full z-50 bg-background shadow-sm`;
+
   return (
-    <header className="relative z-50 bg-background">
+    <header className={headerClass}>
       <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
@@ -43,7 +62,9 @@ const Navbar = () => {
             <Link
               key={link.path}
               to={link.path}
-              className="px-4 py-2 text-sm font-medium font-sans rounded-md transition-colors text-foreground hover:text-primary"
+              className={`px-4 py-2 text-sm font-medium font-sans rounded-md transition-colors hover:text-primary ${
+                isPlatform && !isScrolled ? "text-slate-900" : "text-foreground"
+              }`}
             >
               {link.label}
             </Link>
@@ -52,7 +73,7 @@ const Navbar = () => {
 
         {/* Desktop CTA */}
         <div className="hidden lg:block">
-          <Button asChild className="rounded-lg font-semibold">
+          <Button asChild className="rounded-lg font-semibold shadow-none">
             <Link to="/contact">Get in Touch</Link>
           </Button>
         </div>
@@ -69,18 +90,18 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="lg:hidden bg-background border-t border-border animate-fade-in">
+        <div className="lg:hidden bg-background border-t border-border animate-fade-in absolute top-full w-full left-0 shadow-lg pb-4 rounded-b-xl">
           <nav className="flex flex-col px-6 py-4 gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className="px-4 py-3 text-sm font-medium font-sans rounded-md transition-colors text-foreground hover:text-primary"
+                className="px-4 py-3 text-sm font-medium font-sans rounded-md transition-colors text-foreground hover:bg-slate-50"
               >
                 {link.label}
               </Link>
             ))}
-            <Button asChild className="mt-3 rounded-lg font-semibold">
+            <Button asChild className="mt-3 mx-4 rounded-lg font-semibold shadow-none">
               <Link to="/contact">Get in Touch</Link>
             </Button>
           </nav>
