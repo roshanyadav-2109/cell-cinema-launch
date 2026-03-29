@@ -43,13 +43,14 @@ const Platform = () => {
               src="https://mbcbiolabs.com/wp-content/uploads/2023/03/MBC-BioLabs-logo.svg" 
               alt="MBC BioLabs" 
               className="h-6 md:h-8" 
+            <span>* Sans Carlos</span>
             />
           </div>
         </div>
 
-        {/* 2. Video Frame (Starts after 75% of the screen, rounded top, flat bottom) */}
+        {/* 2. Video Frame (Starts after 75% of the screen, flat top, rounded bottom) */}
         <div className="w-full h-[60vh] md:h-[75vh] relative z-10 mb-10">
-          <div className="w-full h-full overflow-hidden bg-[#000000] relative rounded-t-[40px] md:rounded-t-[80px] rounded-b-none shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+          <div className="w-full h-full overflow-hidden bg-[#000000] relative rounded-t-none rounded-b-[40px] md:rounded-b-[80px] shadow-[0_15px_40px_rgba(0,0,0,0.08)]">
             {/* YouTube Embed: Muted, Autoplay, No Controls, and pointer-events-none to disable hover overlays */}
             <iframe
               className="absolute inset-0 w-full h-full pointer-events-none select-none scale-105" // scale-105 hides faint YouTube iframe borders
