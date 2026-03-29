@@ -1,166 +1,123 @@
-import { useEffect, useState } from "react";
-import PageLayout from "@/components/PageLayout";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-const capabilities = [
-  {
-    title: "Target Identification",
-    desc: "Many disease mechanisms are driven by transient or context dependent cellular behaviors that do not appear in static assays. Continuous monitoring reveals functional targets directly linked to disease progression.",
-  },
-  {
-    title: "Mechanism of Action",
-    desc: "Observe detailed molecular and cellular responses throughout treatment. Gain clarity on pathway activation, feedback effects, and cellular adaptation to support informed decision making.",
-  },
-  {
-    title: "Safety Assessment",
-    desc: "Monitor cellular health continuously to detect early indicators of stress, metabolic disruption, or functional decline much sooner. This allows for earlier intervention and better candidate selection.",
-  },
-  {
-    title: "Disease Modeling",
-    desc: "Work with living human cell systems in real time for a more relevant representation of human biology. Improve both efficacy prediction and safety evaluation with physiologically meaningful models.",
-  },
+const navLinks = [
+  { label: "Platform", path: "/platform" },
+  { label: "Capabilities", path: "/services" },
+  { label: "News", path: "/blog" },
+  { label: "Contact Us", path: "/contact" },
 ];
 
-// Duplicate to create the seamless infinite scroll effect
-const scrollCards = [...capabilities, ...capabilities, ...capabilities];
+const Navbar = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
 
-const Platform = () => {
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const isPlatform = location.pathname === "/platform";
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Calculate progress between 0 and 1 over the first 400px of scrolling
-      let progress = window.scrollY / 400;
-      if (progress > 1) progress = 1;
-      if (progress < 0) progress = 0;
-      setScrollProgress(progress);
+      setIsScrolled(window.scrollY > 20);
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    
+    handleScroll(); // Check immediately on mount
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Dynamic styles based on scroll progress
-  const frameWidth = 100 - (scrollProgress * 8); // 100vw down to 92vw
-  const frameHeight = 100 - (scrollProgress * 25); // 100vh down to 75vh
-  const frameRadius = scrollProgress * 20; // 0px up to 20px
-  const frameMarginTop = scrollProgress * 30; // 0px up to 30px
-  const frameMarginBottom = 80; // Constant
+  // Use fixed positioning so it ignores parent overflow-hidden issues
+  const headerClass = `fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+    isPlatform && !isScrolled
+      ? "bg-transparent border-transparent"
+      : "bg-background/95 backdrop-blur-md shadow-sm border-b border-border/50"
+  }`;
 
   return (
-    <PageLayout title="Platform" description="The first platform for real-time chemical imaging.">
-      
-      {/* Wrapper forcing the white background and Inter font */}
-      <div className="w-full bg-[#ffffff]" style={{ fontFamily: "'Inter', sans-serif" }}>
-        
-        {/* 1. Video Hero Frame (Animates on Scroll) */}
-        <div 
-          className="relative mx-auto overflow-hidden bg-[#000000] flex items-center justify-center shadow-sm"
-          style={{
-            width: `${frameWidth}%`,
-            height: `${frameHeight}vh`,
-            marginTop: `${frameMarginTop}px`,
-            marginBottom: `${frameMarginBottom}px`,
-            borderRadius: `${frameRadius}px`,
-            transition: 'width 0.1s, height 0.1s, margin-top 0.1s, border-radius 0.1s',
-            willChange: 'width, height, margin, border-radius'
-          }}
-        >
-          {/* YouTube Embed: Muted, Autoplay, No Controls, and pointer-events-none to disable hover overlays */}
-          <iframe
-            className="absolute inset-0 w-full h-full pointer-events-none select-none"
-            src="https://www.youtube.com/embed/b0aYlwBE7nk?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=b0aYlwBE7nk&controls=0&disablekb=1"
-            title="Cell Cinema Platform Video"
-            frameBorder="0"
-            allow="autoplay; encrypted-media; gyroscope; picture-in-picture"
-            tabIndex={-1}
-            style={{ border: 'none' }}
-          ></iframe>
-          
-          {/* Internal overlay and text mimicking the uploaded design */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
-          <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 pointer-events-none">
-            <h2 className="text-white text-2xl md:text-4xl font-medium tracking-tight drop-shadow-md">
-              Mapping the real-time dynamics of living cells.
-            </h2>
-          </div>
-        </div>
-
-        {/* Text & Narrative Container */}
-        <div className="max-w-[1000px] mx-auto px-6">
-          
-          {/* 2. Hero Typography */}
-          <h1 className="text-[32px] md:text-[46px] font-medium tracking-tight leading-[1.15] mb-[80px] text-[#000000]">
-            Drug discovery today relies on <span className="text-[#9EA3AC]">dead cells and delayed readouts.</span> By the time you see what happened, the biology has already moved on. We built a platform that watches the chemistry unfold live.
-          </h1>
-
-          {/* 3. Shortened Narrative */}
-          <div className="max-w-[800px] mb-[120px] text-[#1a1a1a] text-[18px] md:text-[20px] leading-[1.6] space-y-[35px]">
-            <p>
-              Traditional drug discovery relies on snapshots. We often miss the dynamic nature of living systems because critical signaling and toxicity events happen in real time. By the time we look at the data the biology has already moved on.
-            </p>
-            <p>
-              This platform enables continuous observation. Instead of one snapshot we follow biological processes as they evolve. This gives researchers a complete and physiologically relevant understanding of how a drug actually behaves in a living cell.
-            </p>
-            <p>
-              Many disease mechanisms are transient and invisible to static assays. Continuous monitoring reveals functional targets directly linked to disease progression. It allows us to see exactly how a compound works by observing pathway activation and cellular adaptation as it happens.
-            </p>
-            <p>
-              Safety assessment also benefits from this real time perspective. We can identify early stress indicators before significant damage occurs. This leads to better candidate selection and a much lower risk of late stage failure in the clinic.
-            </p>
-            <p>
-              By using living human cell systems in real time we improve efficacy and safety predictions. This shift toward more meaningful research models ensures that what we see in the lab translates reliably to actual patients.
-            </p>
-          </div>
-        </div>
-
-        {/* 4. Horizontal Gallery (Continuous Scroll with Tall Cards) */}
-        <div className="pb-[100px] overflow-hidden w-full relative">
-          
-          <style>
-            {`
-              @keyframes continuous-scroll {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(calc(-33.33333%)); }
-              }
-              .animate-continuous {
-                display: flex;
-                width: max-content;
-                animation: continuous-scroll 45s linear infinite;
-              }
-              .animate-continuous:hover {
-                animation-play-state: paused;
-              }
-            `}
-          </style>
-
-          <div className="relative w-full flex overflow-x-hidden">
-            <div className="animate-continuous flex gap-5 px-[4%]">
-              {scrollCards.map((card, index) => (
-                <div 
-                  key={index} 
-                  className="w-[80vw] md:w-[35vw] lg:w-[28vw] h-[600px] flex-shrink-0 bg-[#f8f8f8] border border-[#eeeeee] rounded-[20px] p-8 md:p-10 flex flex-col justify-start hover:border-primary/30 transition-colors"
-                >
-                  <h3 className="text-2xl font-semibold text-[#000000] mb-6 tracking-tight">
-                    {card.title}
-                  </h3>
-                  <p className="text-[#1a1a1a] text-[16px] leading-[1.6]">
-                    {card.desc}
-                  </p>
-                </div>
-              ))}
+    <>
+      <header className={headerClass}>
+        <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between h-16 md:h-20">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="white" strokeWidth="2">
+                <circle cx="12" cy="12" r="3" />
+                <circle cx="12" cy="5" r="1.5" />
+                <circle cx="12" cy="19" r="1.5" />
+                <line x1="12" y1="6.5" x2="12" y2="9" />
+                <line x1="12" y1="15" x2="12" y2="17.5" />
+              </svg>
             </div>
+            <span className="font-sans font-bold text-xl text-primary">
+              Precigenetics
+            </span>
+          </Link>
+
+          {/* Desktop Nav */}
+          <nav className="hidden lg:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`px-4 py-2 text-sm font-medium font-sans rounded-md transition-colors hover:text-primary ${
+                  isPlatform && !isScrolled ? "text-slate-900" : "text-foreground"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Desktop CTA */}
+          <div className="hidden lg:block">
+            <Button asChild className="rounded-lg font-semibold shadow-none">
+              <Link to="/contact">Get in Touch</Link>
+            </Button>
           </div>
-          
-          {/* Gradient masks to smooth the edges of the scrolling cards */}
-          <div className="absolute top-0 bottom-0 left-0 w-8 md:w-24 bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
-          <div className="absolute top-0 bottom-0 right-0 w-8 md:w-24 bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
+
+          {/* Mobile Toggle */}
+          <button
+            className={`lg:hidden p-2 ${isPlatform && !isScrolled ? "text-slate-900" : "text-foreground"}`}
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
 
-      </div>
-    </PageLayout>
+        {/* Mobile Menu */}
+        {mobileOpen && (
+          <div className="lg:hidden bg-background border-t border-border animate-fade-in absolute top-full w-full left-0 shadow-lg pb-4 rounded-b-xl">
+            <nav className="flex flex-col px-6 py-4 gap-1">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className="px-4 py-3 text-sm font-medium font-sans rounded-md transition-colors text-foreground hover:bg-slate-50"
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <Button asChild className="mt-3 mx-4 rounded-lg font-semibold shadow-none">
+                <Link to="/contact">Get in Touch</Link>
+              </Button>
+            </nav>
+          </div>
+        )}
+      </header>
+
+      {/* Spacer Element: 
+        Since the header is 'fixed', it removes itself from the document flow. 
+        We add this invisible spacer block to push the content down exactly the height of the header,
+        but ONLY on non-platform pages, so standard pages don't get their content chopped off.
+      */}
+      {!isPlatform && <div className="h-16 md:h-20 w-full shrink-0"></div>}
+    </>
   );
 };
 
-export default Platform;
+export default Navbar;
