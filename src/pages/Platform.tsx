@@ -28,8 +28,8 @@ const Platform = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Calculate progress between 0 and 1 over the first 400px of scrolling
-      let progress = window.scrollY / 400;
+      // Calculate progress between 0 and 1 over the first 500px of scrolling for a smoother scale
+      let progress = window.scrollY / 500;
       if (progress > 1) progress = 1;
       if (progress < 0) progress = 0;
       setScrollProgress(progress);
@@ -41,12 +41,11 @@ const Platform = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Dynamic styles based on scroll progress
-  const frameWidth = 100 - (scrollProgress * 8); // 100vw down to 92vw
-  const frameHeight = 100 - (scrollProgress * 25); // 100vh down to 75vh
-  const frameRadius = scrollProgress * 20; // 0px up to 20px
-  const frameMarginTop = scrollProgress * 30; // 0px up to 30px
-  const frameMarginBottom = 80; // Constant
+  // Using transform: scale ensures the frame maintains its exact aspect ratio, 
+  // preventing the video inside from "zooming" or reflowing.
+  const scale = 1 - (scrollProgress * 0.12); // Scales from 100% down to 88%
+  const translateY = scrollProgress * 6; // Pushes the scaled element down (up to 6vh) to perfectly center it in the empty space it creates
+  const borderRadius = scrollProgress * 24; // Scales from 0px up to 24px
 
   return (
     <PageLayout title="Platform" description="The first platform for real-time chemical imaging.">
@@ -54,41 +53,43 @@ const Platform = () => {
       {/* Wrapper forcing the white background and Inter font */}
       <div className="w-full bg-[#ffffff]" style={{ fontFamily: "'Inter', sans-serif" }}>
         
-        {/* 1. Video Hero Frame (Animates on Scroll) */}
-        <div 
-          className="relative mx-auto overflow-hidden bg-[#000000] flex items-center justify-center shadow-sm"
-          style={{
-            width: `${frameWidth}%`,
-            height: `${frameHeight}vh`,
-            marginTop: `${frameMarginTop}px`,
-            marginBottom: `${frameMarginBottom}px`,
-            borderRadius: `${frameRadius}px`,
-            transition: 'width 0.1s, height 0.1s, margin-top 0.1s, border-radius 0.1s',
-            willChange: 'width, height, margin, border-radius'
-          }}
-        >
-          {/* YouTube Embed: Muted, Autoplay, No Controls, and pointer-events-none to disable hover overlays */}
-          <iframe
-            className="absolute inset-0 w-full h-full pointer-events-none select-none"
-            src="https://www.youtube.com/embed/b0aYlwBE7nk?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=b0aYlwBE7nk&controls=0&disablekb=1"
-            title="Cell Cinema Platform Video"
-            frameBorder="0"
-            allow="autoplay; encrypted-media; gyroscope; picture-in-picture"
-            tabIndex={-1}
-            style={{ border: 'none' }}
-          ></iframe>
+        {/* 1. Video Hero Frame (Animates via Transform Scale) */}
+        {/* The outer wrapper reserves the full screen height in the document flow */}
+        <div className="w-full h-[90vh] md:h-screen bg-transparent relative flex flex-col justify-start z-10">
           
-          {/* Internal overlay and text mimicking the uploaded design */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
-          <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 pointer-events-none">
-            <h2 className="text-white text-2xl md:text-4xl font-medium tracking-tight drop-shadow-md">
-              Mapping the real-time dynamics of living cells.
-            </h2>
+          {/* The inner element is the actual frame that scales down visually */}
+          <div 
+            className="w-full h-full overflow-hidden bg-[#000000] relative shadow-[0_10px_40px_rgba(0,0,0,0.08)]"
+            style={{
+              transform: `translateY(${translateY}vh) scale(${scale})`,
+              transformOrigin: 'top center',
+              borderRadius: `${borderRadius}px`,
+              willChange: 'transform, border-radius'
+            }}
+          >
+            {/* YouTube Embed: Muted, Autoplay, No Controls, and pointer-events-none to disable hover overlays */}
+            <iframe
+              className="absolute inset-0 w-full h-full pointer-events-none select-none"
+              src="https://www.youtube.com/embed/b0aYlwBE7nk?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=b0aYlwBE7nk&controls=0&disablekb=1"
+              title="Cell Cinema Platform Video"
+              frameBorder="0"
+              allow="autoplay; encrypted-media; gyroscope; picture-in-picture"
+              tabIndex={-1}
+              style={{ border: 'none' }}
+            ></iframe>
+            
+            {/* Internal overlay and text mimicking the uploaded design */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
+            <div className="absolute bottom-10 left-8 md:bottom-16 md:left-16 pointer-events-none">
+              <h2 className="text-white text-3xl md:text-5xl font-medium tracking-tight drop-shadow-md">
+                Mapping the real-time dynamics of living cells.
+              </h2>
+            </div>
           </div>
         </div>
 
         {/* Text & Narrative Container */}
-        <div className="max-w-[1000px] mx-auto px-6">
+        <div className="max-w-[1000px] mx-auto px-6 pt-10 md:pt-[60px]">
           
           {/* 2. Hero Typography */}
           <h1 className="text-[32px] md:text-[46px] font-medium tracking-tight leading-[1.15] mb-[80px] text-[#000000]">
