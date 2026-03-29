@@ -179,12 +179,12 @@ const Blog = () => {
               </button>
             </div>
 
-            {/* Filter Controls (Non-bold, optimized for mobile row layout) */}
-            <div className="flex flex-row items-center gap-3 w-full md:w-auto relative z-20">
+            {/* Filter Controls (Stacked on mobile, row on desktop) */}
+            <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3 w-full md:w-auto relative z-20">
               <span className="text-primary font-medium text-sm hidden md:block whitespace-nowrap">Filter Options</span>
               
               {/* Archive Dropdown */}
-              <div className="relative flex-1 md:flex-none">
+              <div className="relative w-full md:w-auto">
                 <button 
                   onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
                   className="px-4 py-2 w-full md:w-auto border-[2px] border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-medium text-sm flex items-center gap-2 justify-between"
@@ -193,7 +193,7 @@ const Blog = () => {
                 </button>
                 
                 {isYearDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-2 bg-card border-[2px] border-border rounded-xl shadow-lg min-w-[180px] p-4">
+                  <div className="absolute top-full left-0 mt-2 bg-card border-[2px] border-border rounded-xl shadow-lg min-w-[180px] p-4 z-30">
                     <span className="text-slate-500 text-xs block mb-3 font-medium uppercase tracking-wider">Year</span>
                     {["2026", "2025", "2024", "2023"].map((year) => (
                       <label key={year} className="flex items-center mb-2.5 cursor-pointer text-base text-foreground hover:text-primary transition-colors font-medium">
@@ -209,7 +209,7 @@ const Blog = () => {
               </div>
 
               {/* View Select */}
-              <select className="px-4 py-2 flex-1 md:flex-none border-[2px] border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-medium text-sm appearance-none pr-8 cursor-pointer bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%24%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:calc(100%-10px)_center] bg-[length:14px]">
+              <select className="px-4 py-2 w-full md:w-auto border-[2px] border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-medium text-sm appearance-none pr-8 cursor-pointer bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%24%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:calc(100%-10px)_center] bg-[length:14px]">
                 <option>View 10</option>
                 <option>View 25</option>
                 <option>View All</option>
