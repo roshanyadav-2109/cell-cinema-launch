@@ -94,14 +94,15 @@ const Article = () => {
             {/* Right Column: Sidebar Vertical (1/4 Width) */}
             <aside className="lg:col-span-1 flex flex-col gap-6">
               
-              {/* News Alert Card */}
-              <div className="bg-white border border-[#eeeeee] rounded-[16px] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.03)]">
-                <div 
-                  className="w-full h-[170px] bg-[#f0f0f0] bg-cover bg-center"
-                  style={{ backgroundImage: "url('https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80&w=800')" }}
-                ></div>
-                <div className="p-6">
-                  <h2 className="text-primary text-[20px] font-semibold mb-3 leading-[1.3]">
+              {/* News Alert Card - Padded Image Inside Frame, Reduced Radius, Smaller Content Padding */}
+              <div className="bg-white border border-[#eeeeee] rounded-[6px] shadow-[0_2px_10px_rgba(0,0,0,0.02)] p-4">
+                <img 
+                  src="/image_f11abe.png" // Use the uploaded image
+                  alt="Living cells imaging and Pfizer News" 
+                  className="w-full h-[150px] object-cover rounded-[4px] mb-5" // Reduced height, very small internal radius
+                />
+                <div>
+                  <h2 className="text-primary text-[19px] font-semibold mb-2 leading-[1.3]">
                     Sign up for the latest Precigenetics news alerts
                   </h2>
                   <p className="text-[14px] text-[#666666] leading-[1.4]">
@@ -110,15 +111,15 @@ const Article = () => {
                 </div>
               </div>
 
-              {/* Black Explore Card */}
-              <div className="bg-[#000000] text-[#ffffff] p-[40px_24px] rounded-[16px] min-h-[200px] flex items-end cursor-pointer hover:bg-[#1a1a1a] transition-colors">
-                <h3 className="text-[32px] font-light leading-[1]">
+              {/* Black Explore Card - Reduced Radius and Padding */}
+              <div className="bg-[#000000] text-[#ffffff] p-6 rounded-[6px] min-h-[180px] flex items-end cursor-pointer hover:bg-[#1a1a1a] transition-colors">
+                <h3 className="text-[28px] font-light leading-[1]">
                   Explore<br/>Precigenetics
                 </h3>
               </div>
 
-              {/* Related Resources Card */}
-              <div className="bg-white border border-[#eeeeee] rounded-[16px] p-6 shadow-[0_4px_15px_rgba(0,0,0,0.03)]">
+              {/* Related Resources Card - Reduced Radius and Padding */}
+              <div className="bg-white border border-[#eeeeee] rounded-[6px] p-5 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
                 <h4 className="mb-4 text-[14px] uppercase tracking-[1px] text-[#999999] font-semibold">
                   Related Resources
                 </h4>
