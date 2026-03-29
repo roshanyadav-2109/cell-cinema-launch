@@ -8,7 +8,9 @@ const Article = () => {
   // Article Content Data
   const articleTitle = "Precigenetics Invites Public to View and Listen to Webcast of May 5 Conference Call with Analysts";
   const articleDate = "Tuesday, March 24, 2026 - 10:00am";
-  const articleBody = `NEW YORK—(BUSINESS WIRE)— Precigenetics Inc. invites investors and the general public to view and listen to a webcast of a conference call with investment analysts at 10:00 a.m. EDT on Tuesday, May 5, 2026.
+  
+  // Plain text version for the "Copy Content" button
+  const articleBodyText = `NEW YORK—(BUSINESS WIRE)— Precigenetics Inc. invites investors and the general public to view and listen to a webcast of a conference call with investment analysts at 10:00 a.m. EDT on Tuesday, May 5, 2026.
 
 The purpose of the call is to provide an update on Precigenetics's results, as reflected in the company’s First Quarter 2026 Performance Report, to be issued that morning. Investors can access materials via the official investor relations portal.
 
@@ -21,14 +23,94 @@ At Precigenetics, we apply science and our global resources to bring therapies t
 
   // Handlers for the Action Tray
   const handleDownloadPDF = () => {
-    // Triggers the native browser print dialog, which allows the user to "Save as PDF"
-    window.print();
+    // Generate a perfectly formatted, clean document just for the PDF
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) return;
+
+    const printHTML = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Precigenetics_Press_Release</title>
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+          <style>
+            body { 
+              font-family: 'Inter', sans-serif; 
+              line-height: 1.6; 
+              color: #000; 
+              padding: 40px; 
+              max-width: 800px; 
+              margin: 0 auto; 
+            }
+            .header { 
+              border-bottom: 2px solid #0f172a; 
+              padding-bottom: 20px; 
+              margin-bottom: 40px; 
+              display: flex; 
+              align-items: center; 
+              justify-content: space-between; 
+            }
+            .logo-wrap { display: flex; align-items: center; gap: 12px; }
+            .logo-icon { 
+              width: 36px; height: 36px; background-color: #0f172a; border-radius: 50%; 
+              display: flex; align-items: center; justify-content: center; 
+            }
+            .logo-text { font-size: 26px; font-weight: 700; color: #0f172a; letter-spacing: -0.5px; }
+            .doc-type { font-size: 14px; font-weight: 700; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+            .title { font-size: 34px; font-weight: 700; margin-bottom: 16px; line-height: 1.2; color: #000; letter-spacing: -0.5px; }
+            .date { color: #666; margin-bottom: 40px; font-size: 15px; font-weight: 500; }
+            .content p { margin-bottom: 20px; font-size: 15px; line-height: 1.7; text-align: justify; }
+            @media print {
+              body { padding: 0; }
+              @page { margin: 2cm; }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <div class="logo-wrap">
+              <div class="logo-icon">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2">
+                  <circle cx="12" cy="12" r="3"></circle>
+                  <circle cx="12" cy="5" r="1.5"></circle>
+                  <circle cx="12" cy="19" r="1.5"></circle>
+                  <line x1="12" y1="6.5" x2="12" y2="9"></line>
+                  <line x1="12" y1="15" x2="12" y2="17.5"></line>
+                </svg>
+              </div>
+              <div class="logo-text">Precigenetics</div>
+            </div>
+            <div class="doc-type">Press Release</div>
+          </div>
+          <div class="title">${articleTitle}</div>
+          <div class="date">${articleDate}</div>
+          <div class="content">
+            <p><strong>NEW YORK—(BUSINESS WIRE)—</strong> Precigenetics Inc. invites investors and the general public to view and listen to a webcast of a conference call with investment analysts at 10:00 a.m. EDT on Tuesday, May 5, 2026.</p>
+            <p>The purpose of the call is to provide an update on Precigenetics's results, as reflected in the company’s First Quarter 2026 Performance Report, to be issued that morning. Investors can access materials via the official investor relations portal.</p>
+            <p>"We are moving drug discovery beyond endpoint assays with our new real-time chemical imaging platform," said the leadership team. "This webcast will outline how preserving the temporal dimension of biology allows us to detect subtle but meaningful changes that are otherwise overlooked in traditional models."</p>
+            <p>To view and listen to the webcast and view the Performance Report, visit our web site at <u>www.precigenetics.com/investors</u>. Information on accessing and registering for the webcast will be available on the site starting today.</p>
+            <p><strong>About Precigenetics</strong><br/>At Precigenetics, we apply science and our global resources to bring therapies to people that extend and significantly improve their lives. We strive to set the standard for quality, safety and value in the discovery, development and manufacture of health care products, including innovative medicines and vaccines.</p>
+          </div>
+          <script>
+            // Wait for fonts and content to load, then trigger print
+            window.onload = () => {
+              window.print();
+              // Attempt to close the tab after printing (handled safely)
+              setTimeout(() => { window.close(); }, 500);
+            };
+          </script>
+        </body>
+      </html>
+    `;
+
+    printWindow.document.write(printHTML);
+    printWindow.document.close();
   };
 
   const handleCopyLink = () => {
     let urlToCopy = window.location.href;
     
-    // Safety check: if the URL happens to be a YT embed, convert it to a standard watch link
+    // Convert YouTube embed URLs to standard watch URLs if applicable
     if (urlToCopy.includes('youtube.com/embed/')) {
       const videoId = urlToCopy.split('embed/')[1].split('?')[0];
       urlToCopy = `https://www.youtube.com/watch?v=${videoId}`;
@@ -46,7 +128,7 @@ At Precigenetics, we apply science and our global resources to bring therapies t
   };
 
   const handleCopyContent = () => {
-    const fullText = `${articleTitle}\n${articleDate}\n\n${articleBody}`;
+    const fullText = `${articleTitle}\n${articleDate}\n\n${articleBodyText}`;
     navigator.clipboard.writeText(fullText);
     toast({
       title: "Content copied!",
@@ -149,10 +231,10 @@ At Precigenetics, we apply science and our global resources to bring therapies t
             {/* Right Column: Sidebar Vertical (1/4 Width) */}
             <aside className="lg:col-span-1 flex flex-col gap-6 print:hidden">
               
-              {/* News Alert Card - Padded Image Inside Frame, Reduced Radius, Smaller Content Padding */}
+              {/* News Alert Card */}
               <div className="bg-white border border-[#eeeeee] rounded-[6px] shadow-[0_2px_10px_rgba(0,0,0,0.02)] p-4">
                 <img 
-                  src="/image_f11abe.png" // Use the uploaded image
+                  src="/image_f11abe.png"
                   alt="Living cells imaging and Pfizer News" 
                   className="w-full h-[150px] object-cover rounded-[4px] mb-5" 
                 />
@@ -166,14 +248,14 @@ At Precigenetics, we apply science and our global resources to bring therapies t
                 </div>
               </div>
 
-              {/* Black Explore Card - Reduced Radius and Padding */}
+              {/* Black Explore Card */}
               <div className="bg-[#000000] text-[#ffffff] p-6 rounded-[6px] min-h-[180px] flex items-end cursor-pointer hover:bg-[#1a1a1a] transition-colors">
                 <h3 className="text-[28px] font-light leading-[1]">
                   Explore<br/>Precigenetics
                 </h3>
               </div>
 
-              {/* Related Resources Card - Reduced Radius and Padding */}
+              {/* Related Resources Card */}
               <div className="bg-white border border-[#eeeeee] rounded-[6px] p-5 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
                 <h4 className="mb-4 text-[14px] uppercase tracking-[1px] text-[#999999] font-semibold">
                   Related Resources
