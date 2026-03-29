@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, ChevronDown, Dna } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
 import AnimatedSection from "@/components/AnimatedSection";
 
@@ -41,40 +41,92 @@ const Blog = () => {
   return (
     <PageLayout title="Newsroom" description="The latest from Precigenetics — research updates, industry perspectives, and company news.">
       
-      {/* Animated Top Right Graphic: Floating DNA */}
-      <div className="absolute top-0 right-0 w-full md:w-[600px] h-[400px] overflow-hidden -z-10 pointer-events-none rounded-bl-[100px]">
+      {/* Animated Top Right Graphic: Pure CSS DNA Diagonal */}
+      <div className="absolute top-0 right-0 w-full md:w-[600px] h-[500px] overflow-hidden -z-10 pointer-events-none rounded-bl-[100px]">
         {/* Soft radial glow to ground the animation */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,theme(colors.primary.DEFAULT/0.05)_0%,transparent_70%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,theme(colors.primary.DEFAULT/0.08)_0%,transparent_70%)]"></div>
         
-        {/* Custom Keyframes for corner-to-corner movement */}
         <style>
           {`
-            @keyframes dna-float-1 {
-              0% { transform: translate(100%, -50%) rotate(0deg); }
-              50% { transform: translate(-20%, 80%) rotate(180deg); }
-              100% { transform: translate(100%, -50%) rotate(360deg); }
+            .dna-container {
+              position: absolute;
+              top: -50px;
+              right: 150px;
+              transform: rotate(45deg) scale(1.3);
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              opacity: 0.2; /* Subdued opacity to stay in the background */
+              
+              /* CSS Variables mapped from your provided code */
+              --strand-color: theme('colors.primary.DEFAULT');
+              --strand-width: 6rem;
+              --strand-height: 1.25rem;
+              --strand-line: 0.15rem;
+              --strand-ball: calc(var(--strand-height) * 0.75);
+              --animation-duration: 1.2s;
+              --animation-delay: calc(var(--animation-duration) * -0.375);
             }
-            @keyframes dna-float-2 {
-              0% { transform: translate(-20%, 80%) rotate(45deg); }
-              50% { transform: translate(100%, -20%) rotate(-135deg); }
-              100% { transform: translate(-20%, 80%) rotate(45deg); }
+
+            .strand {
+              position: relative;
+              width: var(--strand-width);
+              height: var(--strand-height);
+            }
+
+            .strand::before,
+            .strand::after {
+              content: '';
+              position: absolute;
+              background: var(--strand-color);
+              animation-duration: var(--animation-duration);
+              animation-iteration-count: infinite;
+              animation-timing-function: ease-in-out;
+              animation-direction: alternate;
+              animation-delay: calc(var(--s) * var(--animation-delay));
+            }
+
+            .strand::before {
+              left: calc(var(--strand-ball) / 2);
+              top: calc((var(--strand-height) - var(--strand-line)) / 2);
+              width: calc(var(--strand-width) - var(--strand-ball));
+              height: var(--strand-line);
+              animation-name: line;
+              will-change: transform;
+            }
+
+            .strand::after {
+              top: calc((var(--strand-height) - var(--strand-ball)) / 2);
+              width: var(--strand-ball);
+              height: var(--strand-ball);
+              border-radius: 50%;
+              box-shadow: calc(var(--strand-width) - var(--strand-ball)) 0 0 var(--strand-color);
+              animation-name: ball;
+              will-change: transform, box-shadow;
+            }
+
+            @keyframes line {
+              to { transform: scaleX(0); }
+            }
+
+            @keyframes ball {
+              to {
+                transform: translateX(calc((var(--strand-width) - var(--strand-ball)) / 2));
+                box-shadow: 0 0 0 var(--strand-color);
+              }
             }
           `}
         </style>
 
-        {/* Floating DNA Molecules */}
-        <div 
-          className="absolute top-0 right-0 text-primary/10" 
-          style={{ animation: 'dna-float-1 25s linear infinite' }}
-        >
-          <Dna className="w-[300px] h-[300px]" strokeWidth={0.5} />
-        </div>
-        
-        <div 
-          className="absolute top-0 right-0 text-primary/10" 
-          style={{ animation: 'dna-float-2 35s linear infinite' }}
-        >
-          <Dna className="w-[200px] h-[200px]" strokeWidth={0.5} />
+        {/* The DNA Elements (increased count to 36 for a longer diagonal stretch) */}
+        <div className="dna-container">
+          {Array.from({ length: 36 }).map((_, i) => (
+            <div 
+              key={i} 
+              className="strand" 
+              style={{ "--s": i } as React.CSSProperties}
+            />
+          ))}
         </div>
       </div>
 
@@ -115,11 +167,11 @@ const Blog = () => {
           </div>
 
           {/* Filter Controls */}
-          <div className="flex items-center gap-4 w-full md:w-auto">
+          <div className="flex items-center gap-4 w-full md:w-auto relative z-20">
             <span className="text-primary font-semibold text-sm hidden md:block">Filter Options</span>
             
             {/* Archive Dropdown */}
-            <div className="relative z-20">
+            <div className="relative">
               <button 
                 onClick={() => setIsYearDropdownOpen(!isYearDropdownOpen)}
                 className="px-5 py-2.5 border border-slate-400 hover:border-primary transition-colors rounded-full bg-background font-semibold text-base flex items-center gap-3 min-w-[160px] justify-between"
@@ -154,13 +206,13 @@ const Blog = () => {
         </div>
 
         {/* Categories Grid */}
-        <div className="font-bold text-lg mb-5 text-foreground">Categories</div>
-        <div className="flex flex-wrap gap-3 mb-14">
+        <div className="font-bold text-lg mb-5 text-foreground relative z-10">Categories</div>
+        <div className="flex flex-wrap gap-3 mb-14 relative z-10">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`px-5 py-2.5 border rounded-lg text-sm font-semibold transition-colors z-10 relative ${
+              className={`px-5 py-2.5 border rounded-lg text-sm font-semibold transition-colors ${
                 filter === cat
                   ? "bg-primary text-primary-foreground border-primary"
                   : "bg-primary/5 text-primary border-primary hover:bg-primary/10"
@@ -171,7 +223,7 @@ const Blog = () => {
           ))}
         </div>
 
-        <hr className="border-t border-slate-200 mb-12" />
+        <hr className="border-t border-slate-200 mb-12 relative z-10" />
 
         {/* News Items List */}
         <div className="flex flex-col relative z-10">
