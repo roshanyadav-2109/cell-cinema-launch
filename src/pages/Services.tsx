@@ -8,7 +8,7 @@ const capabilitiesData = [
       "Continuous molecular measurement of living cells at sub-cellular resolution, capturing chemical dynamics as they happen rather than reconstructing them after the fact.",
     imagePlaceholder: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=1000&auto=format&fit=crop", 
     svg: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-28 h-28 md:w-36 md:h-36 text-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-24 h-24 md:w-32 md:h-32 text-primary drop-shadow-sm">
         <path d="M6 18h8" />
         <path d="M3 22h18" />
         <path d="M14 22a7 7 0 1 0 0-14h-1" />
@@ -22,9 +22,10 @@ const capabilitiesData = [
     title: "Label-Free & Non-Destructive",
     description:
       "Our optical platform interrogates native molecular bonds directly, eliminating probe-induced perturbation. The cell you measure is the cell that's actually there.",
-    imagePlaceholder: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=1000&auto=format&fit=crop",
+    // Exact URL embedded as requested
+    imagePlaceholder: "https://i.pinimg.com/736x/dd/dc/2c/dddc2c2e530d64ab6faa187c52a8ce3a.jpg",
     svg: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-28 h-28 md:w-36 md:h-36 text-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-24 h-24 md:w-32 md:h-32 text-primary drop-shadow-sm">
         <path d="m15 2-3.11 3.11a14.9 14.9 0 0 0-4.65 10.33V22h-1v-6.5a13.9 13.9 0 0 1 4.31-9.59L13.75 2.75l1.25-.75Z" />
         <path d="m9 22 3.11-3.11a14.9 14.9 0 0 0 4.65-10.33V2h1v6.5a13.9 13.9 0 0 1-4.31 9.59L10.25 21.25l-1.25.75Z" />
         <path d="m6 18 12-12" />
@@ -39,7 +40,7 @@ const capabilitiesData = [
       "Population averages hide the biology that matters. We extract high-dimensional chemical signatures from individual cells, resolving the heterogeneity that drives drug resistance.",
     imagePlaceholder: "https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=1000&auto=format&fit=crop",
     svg: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-28 h-28 md:w-36 md:h-36 text-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-24 h-24 md:w-32 md:h-32 text-primary drop-shadow-sm">
         <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" />
         <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z" />
         <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4" />
@@ -96,15 +97,15 @@ const Services = () => {
                     </p>
                   </div>
 
-                  {/* Media Frame (Slightly rounded, no shadow, containing SVG & subtle image background) */}
+                  {/* Media Frame (Wide rectangular aspect ratio, grey background, no shadow) */}
                   <div className="flex-1 w-full">
-                    <div className="relative w-full aspect-[4/3] md:aspect-[5/4] rounded-xl overflow-hidden border border-[#eeeeee] bg-[#ffffff] group flex items-center justify-center">
+                    <div className="relative w-full aspect-[16/9] md:aspect-[3/2] rounded-[16px] overflow-hidden bg-[#f4f4f5] group flex items-center justify-center border border-[#e5e7eb]">
                       
-                      {/* Subtle Image Background (Creates a faint scientific texture inside the flat frame) */}
+                      {/* Image Background (Blends perfectly with the grey frame) */}
                       <img 
                         src={capability.imagePlaceholder} 
                         alt={capability.title}
-                        className="absolute inset-0 w-full h-full object-cover opacity-[0.04] mix-blend-multiply transition-transform duration-700 group-hover:scale-105"
+                        className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-multiply transition-transform duration-700 group-hover:scale-105"
                       />
                       
                       {/* Center Custom SVG */}
